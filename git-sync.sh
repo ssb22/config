@@ -15,6 +15,6 @@ cp -a console.txt .console-setup
 cp -a fbtermrc.txt .fbtermrc
 cp -a jedrc.txt .jedrc
 cp -a tmuxconf.txt .tmux.conf
-cd riscos-high-contrast ; unzip ../high-contrast.zip ; cd ..
+cd riscos-high-contrast ; unzip -o ../high-contrast.zip ; git add * ; cd ..
 tar -zxvf emacs.tgz ; git add .xemacs/*
 git commit -am update && git push
