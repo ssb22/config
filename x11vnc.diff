@@ -1,0 +1,50 @@
+--- x11vnc.c~	Wed Mar 16 10:08:08 2005
++++ x11vnc.c	Wed Mar 16 11:07:39 2005
+@@ -9298,6 +9298,38 @@
+ 	rfbCursorPtr rfb;
+ } cursor_info_t;
+ 
++/* Large-print cursor magnification hack by Silas S. Brown */
++/* If you want the cursor to be magnified more than
++   the desktop scale (as in bigcursor) you can define
++   BIG_CURSOR */
++#ifndef CURSOR_EXTRA_MAGNIFICATION
++#ifdef BIG_CURSOR
++#define CURSOR_EXTRA_MAGNIFICATION 2
++#else
++#define CURSOR_EXTRA_MAGNIFICATION 1
++#endif
++#endif
++void magnify_cursor_data(cursor_info_t* cursor,int magfactor) {
++  char *newdata, *newmask;
++  int x,y,xi,yi;
++  newdata=malloc(cursor->wx*cursor->wy*magfactor*magfactor);
++  newmask=malloc(cursor->wx*cursor->wy*magfactor*magfactor);
++  for(x=0; x<cursor->wx; x++) for(y=0; y<cursor->wy; y++)
++    for(xi=0; xi<magfactor; xi++)
++      for(yi=0; yi<magfactor; yi++) {
++        newdata[(y*magfactor+yi)*cursor->wx*magfactor
++                + x*magfactor+xi]
++          = cursor->data[y*cursor->wy+x];
++        newmask[(y*magfactor+yi)*cursor->wx*magfactor
++                + x*magfactor+xi]
++          = cursor->mask[y*cursor->wy+x];
++  }
++  cursor->data = newdata; cursor->mask = newmask;
++  cursor->sx *= magfactor; cursor->sy *= magfactor;
++  cursor->wx *= magfactor; cursor->wy *= magfactor;
++  cursor->reverse = 1;
++}
++
+ /* empty cursor */
+ static char* curs_empty_data =
+ "  "
+@@ -9658,6 +9690,8 @@
+ 		/* create rfbCursors for the special cursors: */
+ 
+ 		cursor_info_t *ci = cursors[i];
++
++      if(scale_fac>1 || CURSOR_EXTRA_MAGNIFICATION) magnify_cursor_data(ci,((scale_fac>1)?scale_fac:1)*CURSOR_EXTRA_MAGNIFICATION);
+ 
+ 		ci->data = strdup(ci->data);
+ 		ci->mask = strdup(ci->mask);

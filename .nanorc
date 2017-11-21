@@ -1,0 +1,105 @@
+# This is Silas S. Brown's .nanorc
+
+# don't wrap by default - because usually using nano to edit a script etc
+set nowrap
+
+# get as much space as possible
+set morespace
+#set nohelp
+
+set autoindent
+set multibuffer
+set tabsize 4
+set tabstospaces
+
+# line-at-a-time scrolling
+set smooth
+
+# allow nano to be suspended
+set suspend
+
+# cut to end of line (like emacs) instead of whole line
+set cut
+
+# syntax highlighting taken from some of the entries on http://wiki.linuxhelp.net/index.php/Nano_Syntax_Highlighting
+# and some of it modified.
+# NB - only limited testing has been done on white-background terminals
+# TODO: This needs fixing for Mac OS 10.4's old version of nano
+syntax "python" "\.py$"
+color brightblue "def [a-zA-Z_0-9]+"
+color cyan  "\<(and|assert|break|class|continue|def|del|elif|else|except|exec|finally|for|from|global|if|import|in|is|lambda|map|not|or|pass|print|raise|return|try|while)\>"
+color green "([\"']).*?[^\\]\1"
+color green start="\"\"\"" end="\"\"\""
+color brightred "#.*$"
+syntax "c" "\.(c|C|cc|cpp|cxx|h|H|hh|hpp|hxx)$"
+color brightblack "#+(.*)"
+color brightred "\<[A-Z_][0-9A-Z_]+\>"
+color green "\<(float|double|bool|char|int|short|long|sizeof|enum|void|static|const|struct|union|typedef|extern|signed|unsigned|inline)\>"
+color green "\<(u_?)?int(8|16|32|64|ptr)_t\>"
+color green "\<(class|namespace|template|public|protected|private|typename|this|friend|virtual|using|mutable|volatile|register|explicit)\>"
+color yellow "\<(for|if|while|do|else|case|default|switch)\>"
+color yellow "\<(try|throw|catch|operator|new|delete)\>"
+color magenta "\<(goto|continue|break|return|throw)\>"
+color cyan "^space:*#space:*(define|undef|include|ifn?def|endif|elif|else|if|warning|error)"
+color brightmagenta "'([^'\]|(\\["'abfnrtv\\]))'" "'\\(([0-3]?[0-7]{1,2}))'" "'\\x[0-9A-Fa-f]{1,2}'"
+color cyan "__attribute__space:*\(\([^)]*\)\)" "__(aligned|asm|builtin|hidden|inline|packed|restrict|section|typeof|weak)__"
+color yellow "<[^=        ]*>" ""(\\.|[^"])*""
+color brightblue "//.*"
+color brightblue start="/\*" end="\*/"
+syntax "HTML" "\.html$"
+color brightgreen start="<" end=">"
+color red "&[^; ]*;"
+color brightblue start="<!--" end="-->"
+syntax "TeX" "\.tex$"
+color green "\\.|\\[A-Za-z]*"
+color magenta "[{}]"
+color blue "%.*"
+syntax "patch" "\.(patch|diff)$"
+color brightgreen "^\+.*"
+color green "^\+\+\+.*"
+color brightblue "^ .*"
+color brightred "^-.*"
+color red "^---.*"
+color brightyellow "^@@.*"
+color magenta "^diff.*"
+syntax "makefile" "^Makefile\.?"
+color red "[:=]"
+color magenta "\<(if|ifeq|else|endif)\>"
+color blue "\$\{.*}"
+color brightblue "\w+:"
+color green "#.*$"
+syntax "JavaScript" "\.(js)$"
+color white "^.+$"
+color yellow "\<[-+]?([1-9][0-9]*|0[0-7]*|0x[0-9a-fA-F]+)([uU][lL]?|[lL][uU]?)?\>"
+color yellow "\<[-+]?([0-9]+\.[0-9]*|[0-9]*\.[0-9]+)([EePp][+-]?[0-9]+)?[fFlL]?"
+color yellow "\<[-+]?([0-9]+[EePp][+-]?[0-9]+)[fFlL]?"
+color green "\<(break|case|catch|continue|default|delete|do|else|finally)\>"
+color green "\<(for|function|if|in|instanceof|new|null|return|switch)\>"
+color green "\<(switch|this|throw|try|typeof|undefined|var|void|while|with)\>"
+color red "\<(Array|Boolean|Date|Enumerator|Error|Function|Math)\>"
+color red "\<(Number|Object|RegExp|String)\>"
+color red "\<(true|false)\>"
+color brightyellow "L?\"(\\"|[^"])*\""
+color brightyellow "L?'(\'|[^'])*'"
+color red "\\[0-7][0-7]?[0-7]?|\\x[0-9a-fA-F]+|\\[bfnrt'"\?\\]"
+color magenta start="/\*" end="\*/"
+color magenta "//.*$"
+# and some taken from various forum posts etc
+syntax "mutt"
+color green "^>.*"
+syntax "shellscript" "\.sh$"
+icolor brightgreen "^[_A-Z0-9]+\(\)"
+color green "\<(case|do|done|elif|else|esac|exit|fi|for|function|if|in|local|read|return|select|shift|then|time|until|while)\>"
+color green "(\{|\}|\(|\)|\;|\]|\[|`|\\|\$|<|>|!|=|&|\|)"
+color green "-(L|d|e|f|g|r|u|w|x)\>"
+color green "-(eq|ne|gt|lt|ge|le|s|n|z)\>"
+color brightblue "\<(cat|cd|chmod|chown|cp|echo|env|export|grep|install|let|ln|make|mkdir|mv|rm|sed|set|tar|touch|umask|unset)\>"
+icolor brightred "\$\{?[_A-Z0-9]+\}?"
+color yellow "#.*$"
+color brightyellow ""(\\.|[^\"])*"" "'(\\.|[^'])*'"
+syntax "nanorc" "(\.|/|)nanorc$"
+icolor brightgreen "^[[:space:]]*(set|unset|syntax)\>"
+icolor yellow "^[[:space:]]*i?color[[:space:]]*(bright)?(white|black|red|blue|green|yellow|magenta|cyan)?(,(white|black|red|blue|green|yellow|magenta|cyan))?\>"
+icolor brightmagenta "^[[:space:]]*i?color\>" "\<(start|end)="
+icolor white "\"(\\.|[^\"])*\""
+icolor brightblue "^[[:space:]]*#.*$"

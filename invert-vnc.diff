@@ -1,0 +1,37 @@
+--- t2/vnc-3.3.3r2/vncviewer/desktop.c	Mon Jun 14 12:24:29 2004
++++ vnc-3.3.3r2/vncviewer/desktop.c	Sat Jun 12 19:42:18 2004
+@@ -363,6 +363,7 @@
+ 		 + x * myFormat.bitsPerPixel / 8);
+ 
+     for (h = 0; h < height; h++) {
++      int i; for(i=0; i<widthInBytes; i++) buf[i]=~buf[i]; /* ssb hack */
+       memcpy(scr, buf, widthInBytes);
+       buf += widthInBytes;
+       scr += scrWidthInBytes;
+@@ -422,7 +423,7 @@
+   case 8:
+     for (q = 0; q < height; q++) {
+       for (p = 0; p < width; p++) {
+-	*(scr8++) = BGR233ToPixel[*(buf++)];
++        *(scr8++) = ~ BGR233ToPixel[*(buf++)]; /* ssb: added ~ */
+       }
+       scr8 += si.framebufferWidth - width;
+     }
+@@ -431,7 +432,7 @@
+   case 16:
+     for (q = 0; q < height; q++) {
+       for (p = 0; p < width; p++) {
+-	*(scr16++) = BGR233ToPixel[*(buf++)];
++	*(scr16++) = ~ BGR233ToPixel[*(buf++)]; /* ssb: added ~ */
+       }
+       scr16 += si.framebufferWidth - width;
+     }
+@@ -440,7 +441,7 @@
+   case 32:
+     for (q = 0; q < height; q++) {
+       for (p = 0; p < width; p++) {
+-	*(scr32++) = BGR233ToPixel[*(buf++)];
++	*(scr32++) = ~ BGR233ToPixel[*(buf++)]; /* ssb: added ~ */
+       }
+       scr32 += si.framebufferWidth - width;
+     }

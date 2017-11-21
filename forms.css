@@ -1,0 +1,48 @@
+
+/*
+   What this stylehseet does:
+   Sets the colours of the form controls to be the same as
+   the GTK configuration.  Avoids a "colour bug".
+
+   How to install it:
+   Put it in your home directory, and in Galeon do Settings
+   / Preferences / Rendering / Stylesheets Add, and check
+   "Apply this sheet by default".
+
+   (You can also have this stylesheet in addition to any
+   other stylesheets you have, and enable/disable it
+   interactively.)
+   
+   Why it's needed:
+   Sometimes I need to let other people browse the Web from
+   my desktop.  They don't like using my access gateway etc,
+   so I give them a normal Galeon browser without any
+   configuration changes, so websites look "normal".  But
+   something goes wrong: Some websites use stylesheets to
+   set the colours of their form controls, and, guess what,
+   they only set the foreground colour without changing the
+   background (or vice versa).
+
+   Since I've used my own GTK theme, and therefore the
+   "default" foreground/background colour is not what the
+   Web authors expect (even though the Galeon defaults are
+   otherwise "normal"), this can result in some horrible
+   "colour bugs" (like yellow text on a white background, or
+   dark grey text on a black background) when Web authors
+   write CSS like
+
+   input { color: #000000; }
+
+   so it's just GOT to be overridden.
+
+   (2003-04-07, using Galeon 1.2.5)
+
+bugs: arrows on the drop-down boxes are not legible
+
+   */
+
+input[type=submit] {color: yellow ! important;
+        background: #600040 ! important;}
+
+input,select,option,textarea {color: yellow ! important;
+        background: black ! important;}

@@ -1,0 +1,61 @@
+
+# The default papersize to use.
+\default_papersize "a4"
+
+#
+# SCREEN & FONTS SECTION ############################
+#
+
+# These settings have been hacked.  Tested on LyX 1.1.6
+# and 1.3.4 (xforms).  Not used by versions before 1.1.6.
+# Setting screen DPI to 720 means "screen zoom" controls
+# the exact pixel size of a "10 point" font (normal text).
+# At 20 pixels and no scaling allowed, Utopia is not
+# normally available, so it should choose Times for the
+# main text and Utopia for headings.
+# -> this has been disabled for now because it doesn't
+# work on some versions of X11; change here if you want
+# to try it.  (when I tested it, works on XFree86 v4 but not
+# Xorg)
+
+\screen_dpi 720
+\screen_zoom 20
+# \screen_font_roman "-*-utopia"
+\screen_font_roman "-*-times"
+\screen_font_scalable false
+
+#
+# COLOR SECTION ###################################
+#
+
+\set_color "cursor" "#ffffff"
+\set_color "background" "#000000"
+\set_color "foreground" "#ffffff"
+\set_color "selection" "#0000e7"
+\set_color "latex" "#00ffff"
+\set_color "note" "#ffffff"
+\set_color "noteframe" "#006000"
+\set_color "command" "#ffffff"
+\set_color "commandbg" "#434547"
+\set_color "accent" "#f8f800"
+\set_color "accentbg" "#9137f9"
+\set_color "special" "#ff7bff"
+\set_color "math" "#00aa00"
+\set_color "mathbg" "#000000"
+\set_color "mathframe" "#088608"
+\set_color "mathcursor" "#00ff00"
+\set_color "footnote" "#e91323"
+\set_color "footnotebg" "#000000"
+\set_color "eolmarker" "#ff7f2a"
+\set_color "tableline" "#009800"
+\set_color "tabularline" "#00c597"
+\set_color "bottomarea" "#484850"
+\set_color "right" "#666665"
+\set_color "buttonbg" "#1303d6"
+
+#
+# 2nd MISC SUPPORT SECTION ##########################
+#
+
+\screen_font_encoding_menu "iso8859-1"
+\default_language british

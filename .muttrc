@@ -1,0 +1,191 @@
+# .muttrc settings for large-print terminals
+# (i.e. not many rows and columns available)
+# (C) Silas S. Brown 2007,2009-2013,2016, version 1.44, License: GPL
+
+# avoid index taking up too much space when reading the message underneath:
+set pager_index_lines = 5 ;
+# (mutt default is 0, but some packages increase that quite a lot, so let's set it low)
+
+# try to format messages nicely to the screen width
+# - have to do this in a roundabout way because mutt doesn't pass arguments to formatter
+# (and be careful not to write anything about the CURRENT terminal
+# to the .fmt-command file, as there may be other instances of
+# mutt, including batch-run instances with no terminals that
+# get restarted after this one starts)
+set display_filter = `echo $(if test -e ~/.message-formatter; then echo $HOME/.message-formatter; else echo fmt -w; fi) "\$(if test a\$COLUMNS = a;then stty -F /dev/stderr size|sed -e 's/.* //'; else echo \$COLUMNS; fi)" > ~/.fmt-command; chmod +x ~/.fmt-command ; echo $HOME/.fmt-command`;
+# BSD (including Mac) needs -f instead of -F in that stty
+# (can't take the default of stdin, as it's the message)
+
+# ATTENTION OLD MUTT USERS: In old versions of mutt, you must
+# set charset to us-ascii to stop any unusual characters from playing havoc
+# with the terminal (change this if your terminal definitely supports charsets)
+#set charset = 'us-ascii' ;
+# but in never versions (1.5.20+) you don't need this (it'll be taken from LC_ALL)
+# and it's adviseable to set a charset like utf-8 because when (v)iewing and (s)aving
+# parts of a message it is now run through iconv!
+# (if the incoming message has a broken charset then edit the MIME headers and set it to
+# something nonsensical before saving; can then get the actual bytes and figure them out in Wenlin or whatever)
+set charset = 'utf-8' ;
+
+# and make sure iconv etc recognises the whole of GB18030
+# when it's labelled as GB2312 or GBK
+charset-hook GB2312 GB18030;
+charset-hook GBK GB18030;
+
+set ascii_chars = 'yes';
+# (see near end of this file for a way of viewing messages in any charset whether
+# the terminal supports it or not)
+# Note: in order to prevent autoview stuff from possibly messing up the terminal,
+# you may have to set LC_ALL=C before invoking mutt.
+
+# If you do not have charset set to utf-8:
+# When sending messages, you can press Control-T to edit the content type
+# and set a charset; save the file in the right charset and DON'T ask mutt to
+# convert, because it might have the wrong idea about what it's converting FROM.
+# (If using jed or jmacs for mutt then you might want to press
+# Control-x i to insert a file that you've saved in something else)
+# When sending utf-8 (or other charset) SUBJECT lines, you can press
+# :set charset="utf-8";  just before pressing Y to send the message.
+# Then :set charset="us-ascii"; after.  If you have a patched version
+# of mutt then you might try the file_charset option instead.
+# Temporarily changing the charset can also be used before replying to
+# a message to get the utf-8 chars in the body (but not the subject, unless
+# you copy it back in from a browser).
+
+# Be very brief when displaying headers (unless press h to see all)
+# (but make sure to include BCC, useful for Copyself viewing,
+# and make sure to include Reply-To, for LinkedIn invitations etc)
+ignore *;
+unignore from date reply-to to cc bcc subject importance;
+unhdr_order *;
+hdr_order From Date: From: Reply-To: To: Cc: Bcc: Subject: Importance:;
+
+# Briefer index formats etc:
+set index_format = "%Z %-15.15L %-25.25s %{%b %d} (%c)" ;
+set status_format = "%r %f [#=%?M?%M/?%m%?n? new=%n?%?o? old=%o?%?d? del=%d?%?F? flag=%F?%?t? tag=%t?%?p? post=%p?%?b? inc=%b?%?l? %l?] (%s/%S) %> (%P)" ;
+set folder_format = "%t %N %f";
+
+# Other brevity:
+set confirmappend = "no";
+# - don't need Y/N after entered a folder to save to
+set confirmcreate = "yes";
+# - but probably DO want this (catch typing mistakes)
+set help = "no";
+# - saves a line at the top
+set save_empty = "no";
+set delete = "yes";
+# - automatically delete messages marked for deletion when leaving folder
+# (alternative is to lose the deletion marks, so might as well)
+# But disable the unconfirmed quit key!
+# especially as may be hastily trying to Undelete
+bind index Q noop
+bind pager Q noop
+# Similarly it might help to disable the unconfirmed forget-status-and-quit
+bind index x noop
+bind pager x noop
+
+set edit_headers = 'yes';
+set autoedit = 'yes';
+# fast_reply is not effective if autoedit, but if above 2 are turned off then this may be useful:
+set fast_reply = 'yes';
+
+# Choose an editor that's likely to be OK on small terminals
+# emacs could be too heavyweight (unless there's a server that gnuclient can attach to)
+# NB jmacs cannot be configured to 'always wrap to screen width' (at least not on the installation I used) so we tell it where to wrap on the command line.
+# Again, don't write anything about current terminal in .edit-cmd
+set editor = `echo "if test a\$COLUMNS = a;then export COLUMNS=\$(stty size|sed -e 's/.* //');fi;\$(echo $(which jmacs&&echo echo -rmargin \$COLUMNS||which jed||which emacs||which xemacs)) \$@">~/.edit-cmd;chmod +x ~/.edit-cmd;echo $HOME/.edit-cmd`;
+
+set rfc2047_parameters = "yes";
+# - helps decode broken attachments
+
+# simple_search defaults to looking in From and Subject.  More useful if also looks in To (if using copyself folder as an extra address book)
+set simple_search = "~f %s | ~t %s | ~s %s";
+
+# Colours:
+color hdrdefault brightgreen black;
+color header brightcyan black "^Subject";
+color header brightred black "^Importance: High";
+color bold brightcyan black;
+color search brightwhite magenta;
+color attachment brightyellow blue;
+
+# color normal brightwhite black;
+# color body brightyellow black ".";
+# don't have the above 2 lines - the "body" regexp overrides quoting
+# do this instead:
+color normal brightyellow black;
+# and the quoting:
+color quoted brightgreen black;
+color quoted1 brightmagenta black;
+color quoted2 brightblue black;
+color quoted3 brightred black;
+color quoted4 magenta black;
+color quoted5 blue black;
+color quoted6 red black;
+color signature green black;
+color error brightwhite red;
+color status brightwhite blue;
+# note: with the following index colours, earlier is overridden by later
+# (so e.g. deleted messages should go last if you want them to always be coloured
+# as deleted messages regardless of what other categories they fall into)
+# messages from self:
+color index brightwhite black "~P";
+# deleted messages:
+color index magenta black '~D';
+
+# Uncomment 2 lines below to view HTML etc using mailcap
+# filters if possible:
+#auto_view text/html;
+#set implicit_autoview = 'yes';
+
+# - if that doesn't work, try writing a ~/.mailcap like
+# text/html; ~/mutt/lynx.sh %{charset} %s; copiousoutput; description=HTML Text; nametemplate=%s.html
+# and a ~/mutt/lynx.sh like:
+# #!/bin/bash
+# export L=$(echo "$1"|sed -e s/18030/2312/) # lynx won't recognise "GB18030" labels
+# exec lynx -assume-charset="$L" -display-charset="$L" -dump -force_html "$2" | iconv -f $(echo "$L"|sed -e s/2312/18030/ -e s/ISO8859_1/ISO-8859-1/ -e s/ks_*c_*5601-*1*9*8*7*/ksc5636/) -t //TRANSLIT
+# (lynx not w3m because some w3m versions stop rendering
+# pages that contain very bad HTML part-way through, e.g.
+# META tags in the middle of the BODY)
+
+# Also we can have the option to view HTML (and other
+# items) in a graphical browser when needed:
+# "Print" (send to lpr) is not very useful if larger type is needed
+# so let's set that command to send the message to MHonArc for
+# HTML formatting for the browser.
+set print = 'yes';
+set print_decode = 'no';
+set print_split = 'no';
+set wait_key = 'yes';
+#set print_command='cd $(mktemp -d ~/public_html/mailXXX);mhonarc -;echo;if [ a$DISPLAY = a -o ! -e /usr/bin/firefox ];then echo http://$(hostname -f)/~$(whoami)/$(pwd|sed -e "s-.*/--")/maillist.html; else firefox file://$(pwd)/maillist.html;fi;echo When done: rm -r $(pwd)';
+ set print_command="cd $(mktemp -d ~/public_html/mailXXX);sed -e $'s/\\f/From \\\\n/'|LANG=C mhonarc -;[ a\$WEB = a ]&&export WEB=$(hostname -f);echo;echo http://\$WEB/~$(whoami)/$(pwd|sed -e 's-.*/--')/maillist.html;echo Then rm -r $(pwd)";
+# Note: the above CANNOT be made much longer, because some versions of mutt will truncate it.  (And that happens after expansion of environment variables, hence escaping some of those $'s)
+# If you need to do more then make a separate script and call that.
+# (The second version allows you to set WEB to the webserver's name if different from hostname -f)
+# (NB some versions of mktemp won't accept fewer than 3 X characters)
+
+# If you've installed MHonarc on a Mac, you might prefer:
+# set wait_key = 'no';
+# set print_command="cd $(mktemp -d /tmp/mailXXX);sed -e $'s/\\f/From \\\\n/'|LANG=C mhonarc - >/dev/null 2>/dev/null;open maillist.html";
+
+# NB if your MHonarc mangles UTF-8 messages, you might have to export M2H_RCFILE to a file containing
+# the contents of http://www.mhonarc.org/MHonArc/doc/rcfileexs/utf-8-encode.mrc.html
+
+# ------------------------------------------------
+
+set sort=reverse-date-sent;
+# (old versions of mutt do that anyway, some new versions default to forward-sort of date, let's make it consistent)
+
+# to prevent Bcc from being exposed by Mutt+Exim, set -t option, and ignore the addresses on the command line
+# but we can't use bash -c 'sendmail -t #' because mutt won't parse these quotes
+# This must be single quoted not double quoted or mutt will try to expand $IFS itself and go wrong:
+set sendmail='/bin/bash -c $1$IFS$2$IFS$3$IFS$4 bash /usr/sbin/sendmail -oem -oi -t'
+# and when using the -t option, Bounce won't work, so unbind it:
+bind index b noop
+bind pager b noop
+# and make sure write_bcc is still yes:
+set write_bcc='yes';
+# Alternatively, you may comment out the above and
+# compile msmtp in your home directory:
+# set sendmail=$HOME/msmtp/bin/msmtp
+# or with a recent-enough version of mutt, just use --enable-smtp

@@ -1,0 +1,465 @@
+! -*- xrdb -*-
+
+! This is Silas S. Brown's X resources file.
+! This is meant for large monitor and low-res virtual desktop
+
+! To activate any changes, type: xrdb + ~/.Xresources
+! (this only affects newly-launched applications)
+! If this command is in your .xsession (or similar)
+! near the start, then the settings should take place
+! every time you log in.
+
+! ------------------------------------------------------
+
+! X Freetype Library settings.  Can be used to enlarge some
+! more modern setups.  If you set the 'dpi' value to
+! something significantly bigger than your real dpi, you get
+! fairly consistent magnification even when an application
+! hard-codes some of the font sizes.
+Xft.dpi: 125
+Xft.hinting:	true
+Xft.hintstyle:	hintslight
+! or try hintmedium. strangely enough can be better than 'hintfull'
+! see http://web.archive.org/web/20070703003458/http://www.cs.mcgill.ca/~dchest/xfthack/
+Xft.antialias: 0
+! (for low resolutions)
+
+! ------------------------------------------------------
+! Bitmap fonts to use.  See below for a brief explanation.
+! -misc-fixed-medium-r-normal-*-20-*-100-*-c-*-iso8859-1 is good for terminals
+! but it's not available any larger than 20 (it's a bitmap and doesn't scale
+! well).
+! (fontList is used by the Motif library)
+				 *font: -*-fixed-medium-r-normal-*-20-*-100-*-c-*-*-*
+			 *fontList: -*-fixed-medium-r-normal-*-20-*-100-*-c-*-*-*
+			 *textFont: -*-fixed-medium-r-normal-*-20-*-100-*-c-*-*-*
+
+! Some versions of nedit need explicit stuff
+			 nedit*fontList: -*-fixed-medium-r-normal-*-20-*-100-*-c-*-*-*
+	nedit*helpText.fontList: -*-fixed-medium-r-normal-*-20-*-100-*-c-*-*-*
+! NEEDATTENTION above line doesn't seem to work
+				UXTerm*font: -*-fixed-medium-r-normal-*-20-*-100-*-c-*-*-*
+            UXTerm*geometry: 57x17
+
+! Emacs menu bar and pop-up menus (different from other
+! Emacs faces).  The following should work in various
+! different configurations of XEmacs.
+
+    Emacs*menubar*font: -*-helvetica-bold-r-normal-*-14-*-*-*-p-*-*-*
+    Emacs*menubar*Font: -*-helvetica-bold-r-normal-*-14-*-*-*-p-*-*-*
+ Emacs*menubar*FontSet: -*-helvetica-bold-r-normal-*-14-*-*-*-p-*-*-*
+Emacs*menubar*fontList: -*-helvetica-bold-r-normal-*-14-*-*-*-p-*-*-*
+      Emacs*popup*font: -*-helvetica-bold-r-normal-*-14-*-*-*-p-*-*-*
+      Emacs*popup*Font: -*-helvetica-bold-r-normal-*-14-*-*-*-p-*-*-*
+   Emacs*popup*FontSet: -*-helvetica-bold-r-normal-*-14-*-*-*-p-*-*-*
+  Emacs*popup*fontList: -*-helvetica-bold-r-normal-*-14-*-*-*-p-*-*-*
+
+Emacs.bold-italic.attributeFont: -adobe-utopia-regular-r-normal-*-19-*-*-*-p-*-iso8859-1
+Emacs.italic.attributeFont: -*-lucida-bold-r-normal-*-19-*-*-*-p-*-iso8859-1
+Emacs.bold.attributeFont: -bitstream-courier-bold-r-normal-*-20-*-*-*-m-*-*-*
+
+! -*-lucida-medium-r-normal-sans-16-*-*-*-p-*-iso8859-1
+
+! The only large bold fonts available on a lot of systems are courier, which
+! gets a bit tiring.  However, if you set the fountry to something nonsensical,
+! most programs will create bold by overstriking the normal font.
+! (The other parameters are probably ignored and the above ones used instead.)
+! Actually, we could just leave this unset.
+!		     *boldFont: -asdf-*-bold-r-normal-*-20-*-*-*-*-*-*-*
+!	*boldHighlightFont: -asdf-*-bold-r-normal-*-20-*-*-*-*-*-*-*
+! XEmacs won't do this overstriking, so give it a proper bold font.
+! Now moved this to .emacs, because specifying the resources here either
+! got spurious warnings or incorrect behaviour (probably a bug somewhere)
+
+! *italicHighlightFont: -*-*-*-o-normal-*-20-*-*-*-*-*-*-*
+! *boldItalicHighlightFont: -bitstream-*-bold-o-normal-*-20-*-*-*-*-*-*-*
+
+! Fonts can be chosen by changing the numbers in the above directly,
+! or by using xfontsel or gtkfontsel.  It's worth making sure there are
+! plenty of extra fonts installed on your system.
+
+! * means "anything".  The fields are: Foundry, Family, Weight (normal or
+! bold), Slant (r=Roman o=ital), Set width (eg. normal, condensed), Add style,
+! Pixel size (eg. 20), Point size, Resolution X, Resolution Y, Spacing
+! (p=proportional m=monospaced c=char cell), Average width, Character set
+! (eg. iso8859), Character subset (eg. 1)
+
+! =========================================================
+
+			  *cursorColor: gold
+		 *cursorForeground: gold
+		  *text.foreground: yellow
+		  *text.background: black
+			   *foreground: yellow
+			   *background: black
+			  *borderColor: cyan
+	   *menuBar.foreground: yellow
+	   *menuBar.background: gray40
+
+! Emacs has all lower case.
+! Need a fairly dark background (because of large menus &
+! fatigue), but needs to contrast a little with the black
+! background of the surrounding workspace.  Try:
+       *menubar*foreground: yellow
+       *menubar*background: #004055
+
+         *text.heavyCursor: true
+	*text.selectForeground: yellow
+	*text.selectBackground: blue
+	 *statsLine.foreground: yellow
+	 *statsLine.background: blue
+	  *helpText.foreground: yellow
+	  *helpText.background: black
+					   *fg: yellow
+					   *bg: black
+           *highlightColor: darkblue
+             *pointerColor: yellow
+   *pointerColorBackground: blue
+
+       *Scrollbar*thickness: 20
+! Athena stuff (e.g. xterm) tends to use the following
+      *Scrollbar*background: darkgreen
+      *Scrollbar*foreground: yellow
+! tk programs (e.g. kernel xconfig) use the lines below.
+! The scrollbar is drawn in black and *Scrollbar*Background
+! and is only set to *Scrollbar*Foreground when the mouse
+! is above it.
+      *Scrollbar*Background: darkgrey
+      *Scrollbar*Foreground: purple
+! Also one for Motif:
+    *XmScrollBar*Background: darkgreen
+   *XmScrollBar*troughColor: yellow
+
+          *Clock*foreground: yellow
+               *Clock*hands: magenta
+           *Clock*highlight: purple
+          *Clock*background: grey30
+
+     *MenuButton*background: #006085
+     *SimpleMenu*background: #006085
+        *Command*background: brown
+          *Label.background: grey30
+! Other Athena widgets?  Motif ??
+
+! LyX stuff:
+! (Versions of LyX up to 1.1.4 use this; for higher versions
+! see .lyx/lyxrc)
+	  *LyX.BackgroundColor: black
+	   *LyX.SelectionColor: blue
+		 *LyX.LightedColor: darkblue
+			*LyX.NoteColor: yellow
+		   *LyX.LatexColor: cyan
+	   *LyX.OnOffLineColor: yellow
+		 *LyX.NewLineColor: red
+			*LyX.FillColor: red
+		   *LyX.LabelColor: yellow
+			*LyX.FootColor: yellow
+	   *LyX.MathFrameColor: red
+			*LyX.MathColor: green
+			  *LyX.Reverse: 1
+
+! Next setting applies even to newer versions of LyX:
+! initial geometry.  Make sure not larger than the visible
+! area of the virtual desktop (especially for versions that
+! can't be resized any smaller than initial size).
+       *LyX.geometry: 640x480
+
+! nedit stuff:
+	   nedit.stdOpenDialog: True
+! In nedit, you can get the menus more clearly separated
+! from the text by using grey.  However, this means we have
+! to re-iterate all the other backgrounds for nedit, as otherwise
+! the grey will override them.  So:
+		  nedit*background: gray40
+	 nedit*text.background: black
+nedit*statsLine.background: blue
+ nedit*helpText.background: black
+! some nedit versions need an explicit foreground as well
+          nedit*foreground: yellow
+     nedit*text.foreground: yellow
+ nedit*helpText.foreground: yellow
+
+! NEdit: Here's a well-tested set of highlight colors for use with dark backgrounds
+! and a single font.  (contributed by Lance Spaulding of HP)
+! Source: ftp://ftp.fnal.gov/pub/nedit/v5_0_2/contrib/darkbg.styles
+			  nedit.styles:   Plain:Yellow:Plain\n\
+				   Comment:Gray85:Plain\n\
+				   Keyword:LightSkyBlue:Plain\n\
+			  Storage Type:LawnGreen:Plain\n\
+					String:orange:Plain\n\
+				   String1:cyan:Plain\n\
+				   String2:White:Plain\n\
+			  Preprocessor:Coral:Plain\n\
+			 Preprocessor1:White:Plain\n\
+		   Character Const:Orange:Plain\n\
+			 Numeric Const:LightBlue:Plain\n\
+				Identifier:White:Plain\n\
+			   Identifier1:White:Plain\n\
+				Subroutine:LightCyan:Plain\n\
+			   Subroutine1:chocolate:Plain\n\
+			Ada Attributes:White:Plain\n\
+					  Flag:LimeGreen:Plain\n\
+			  Text Comment:white:Plain\n\
+				  Text Key:white:Plain\n\
+				 Text Key1:white:Plain\n\
+				  Text Arg:white:Plain\n\
+				 Text Arg1:white:Plain\n\
+				 Text Arg2:white:Plain\n\
+			   Text Escape:white:Plain\n\
+				LaTeX Math:darkGreen:Plain
+
+! xterm stuff:
+         XTerm*multiScroll: true
+        UXTerm*multiScroll: true
+		   XTerm*scrollBar: on
+		  UXTerm*scrollBar: on
+		   XTerm*saveLines: 1000
+		  UXTerm*saveLines: 1000
+    XTerm*bellSuppressTime: 1000
+   UXTerm*bellSuppressTime: 1000
+		 XTerm*reverseWrap: on
+		UXTerm*reverseWrap: on
+        XTerm*highlightSelection:  true
+       UXTerm*highlightSelection:  true
+
+            *colorBDMode:  on
+                *colorBD: cyan
+            *colorULMode:  on
+                *colorUL:  magenta
+    XTerm.VT100*cursorColor: lime green
+   UXTerm.VT100*cursorColor: lime green
+
+        XTerm.VT100.eightBitInput:  true
+       UXTerm.VT100.eightBitInput:  true
+        XTerm.VT100.eightBitOutput:  true
+       UXTerm.VT100.eightBitOutput:  true
+        XTerm.VT100*colorMode:  on
+       UXTerm.VT100*colorMode:  on
+        XTerm.VT100*dynamicColors:  on
+       UXTerm.VT100*dynamicColors:  on
+
+! xfig stuff:
+		 *canvasbackground: darkblue
+		 *canvasforeground: yellow
+			   *pageborder: green
+		   *showpageborder: true
+
+! xpdf stuff:
+		 ! *xpdf.initialZoom: 2
+! commented out the above because it has different semantics
+! in different versions of xpdf (in newer versions it's a
+! percentage)
+		  *xpdf.paperColor: darkgrey
+		  *xpdf.urlCommand: go lynx '%s'
+! Not using anti-aliased fonts because they don't work too
+! well with different background colours
+		*xpdf.t1libControl: plain
+	 ! *xpdf.t1libControl: none
+
+! This stuff is for GTK 2.0 etc - later versions of KDE can
+! actually generate these X-resources from their dialogues
+! (use xrdb -query to check, then customise by hand as
+! necessary)
+
+! (NB gtk 2.2.0 still gets its colours from gtkrc, but gtk
+! 2.4.0 gets its colours from here)
+
+XWp*XmTextField*background:	#000000
+Acroread.background:	#000000
+AcroRead.XmScreen.background:	#000000
+*Canvas.activeBackground:	#000000
+*Canvas.background:	#000000
+*Canvas.highlightBackground:	#000000
+*Entry.activeBackground:	#000000
+*Entry.background:	#000000
+*Entry.highlightBackground:	#000000
+*List.background:	#000000
+*Listbox.activeBackground:	#000000
+*Listbox.background:	#000000
+*Listbox.highlightBackground:	#000000
+*Text.activeBackground:	#000000
+*Text.background:	#000000
+*Text.highlightBackground:	#000000
+*XmList.background:	#000000
+*XmText.background:	#000000
+*XmTextField.background:	#000000
+XWp*XmDialogShell*XmDrawingArea.background:	#000000
+XWp*XmDialogShell*XmList*background:	#000000
+XWp*XmDialogShell*XmScrolledWindow*XmDrawingArea.background:	#000000
+XWp*XmDialogShell*XmText*background:	#000000
+XWp*XmDialogShell*XmTextField*background:	#000000
+XWp*XmDrawingArea.background:	#000000
+XWp*XmList*background:	#000000
+XWp*XmText*background:	#000000
+*Canvas.selectbackground:	#0000ff
+*Entry.selectBackground:	#0000ff
+*Listbox.selectBackground:	#0000ff
+*Text.selectBackground:	#0000ff
+*Box.background:	#302060
+*Button.activeBackground: #904080
+*Button.background:	#302060
+*Button.highlightBackground: #0020C0
+*Checkbutton.activeBackground: #904080
+*Checkbutton.background:	#302060
+*Checkbutton.highlightBackground: #0020C0
+*Command.background:	#302060
+*Dialog.background:	#302060
+*Form.background:	#302060
+*Frame.activeBackground: #904080
+*Frame.background:	#302060
+*Frame.highlightBackground: #0020C0
+*Label.activeBackground: #904080
+*Label.highlightBackground: #0020C0
+*Menu.activeBackground: #904080
+*Menu.background:	#302060
+*Menubutton.activeBackground: #904080
+*Menubutton.background:	#302060
+*MenuButton.background:	#302060
+*Menubutton.highlightBackground: #0020C0
+*Menu.highlightBackground: #0020C0
+*Radiobutton.activeBackground: #904080
+*Radiobutton.background:	#302060
+*Radiobutton.highlightBackground: #0020C0
+*Scale.activeBackground: #904080
+*Scale.background:	#302060
+*Scale.highlightBackground: #0020C0
+*Scale.troughColor:	#302060
+*Toggle.background:	#302060
+*Toplevel.activeBackground: #904080
+*Toplevel.background:	#302060
+*Toplevel.highlightBackground: #0020C0
+*XmCascadeButton.background:	#302060
+*XmCascadeButtonGadget.background:	#302060
+*XmDialogShell.background:	#302060
+*XmFileSelectionBox.background:	#302060
+*XmForm.background:	#302060
+*XmFrame.background:	#302060
+*XmLabel.background:	#302060
+*XmLabelGadget.background:	#302060
+*XmMenuShell.background:	#302060
+*XmMessageBox.background:	#302060
+*XmPanedWindow.background:	#302060
+*XmPushButton.background:	#302060
+*XmPushButtonGadget.background:	#302060
+*XmRowColumn.background:	#302060
+*XmSash.background:	#302060
+*XmScrollBar.background:	#302060
+*XmScrolledWindow.background:	#302060
+*XmSelectionBox.background:	#302060
+*XmSeparator.background:	#302060
+*XmSeparatorGadget.background:	#302060
+*XmTearOffButton.background:	#302060
+*XmTearOffButtonGadget.background:	#302060
+*XmToggleButton.background:	#302060
+*XmToggleButtonGadget.background:	#302060
+XWp*background:	#302060
+XWp.form.controlbar.menubar.CBHlpButton*background:	#302060
+XWp.form.hscrollbar.background:	#302060
+XWp.form.rulerframe.ruler*background:	#302060
+XWp.form.scrollbar0.background:	#302060
+XWp.mainWindowForm.mainWindowMenubar*background:	#302060
+XWp*menubar*background:	#302060
+XWp*MenuBar*background:	#302060
+XWp*popmenu*background:	#302060
+XWp*XmDialogShell*background:	#302060
+XWp*XmScrolledWindow*XmDrawingArea.background:	#302060
+AcroRead.borderColor:	#ffff00
+Acroread.foreground:	#ffff00
+AcroRead.XmScreen.borderColor:	#ffff00
+*Box.foreground:	#ffff00
+*Button.activeForeground:	#ffff00
+*Button.foreground:	#ffff00
+*Button.highlightColor:	#ffff00
+*Canvas.activeForeground:	#ffff00
+*Canvas.foreground:	#ffff00
+*Canvas.highlightColor:	#ffff00
+*Checkbutton.activeForeground:	#ffff00
+*Checkbutton.foreground:	#ffff00
+*Checkbutton.highlightColor:	#ffff00
+*Command.foreground:	#ffff00
+*Dialog.foreground:	#ffff00
+*Entry.activeForeground:	#ffff00
+*Entry.foreground:	#ffff00
+*Entry.highlightColor:	#ffff00
+*Form.foreground:	#ffff00
+*Frame.activeForeground:	#ffff00
+*Frame.foreground:	#ffff00
+*Frame.highlightColor:	#ffff00
+*Label.activeForeground:	#ffff00
+*Label.foreground:	#ffff00
+*Label.highlightColor:	#ffff00
+*Listbox.activeForeground:	#ffff00
+*Listbox.foreground:	#ffff00
+*Listbox.highlightColor:	#ffff00
+*List.foreground:	#ffff00
+*Menu.activeForeground:	#ffff00
+*Menubutton.activeForeground:	#ffff00
+*Menubutton.foreground:	#ffff00
+*MenuButton.foreground:	#ffff00
+*Menubutton.highlightColor:	#ffff00
+*Menu.foreground:	#ffff00
+*Menu.highlightColor:	#ffff00
+*Radiobutton.activeForeground:	#ffff00
+*Radiobutton.foreground:	#ffff00
+*Radiobutton.highlightColor:	#ffff00
+*Scale.activeForeground:	#ffff00
+*Scale.foreground:	#ffff00
+*Scale.highlightColor:	#ffff00
+*SimpleMenu*foreground:	#ffff00
+*Text.activeForeground:	#ffff00
+*Text.foreground:	#ffff00
+*Text.highlightColor:	#ffff00
+*Toggle.foreground:	#ffff00
+*Toplevel.activeForeground:	#ffff00
+*Toplevel.foreground:	#ffff00
+*Toplevel.highlightColor:	#ffff00
+*XmCascadeButton.foreground:	#ffff00
+*XmCascadeButtonGadget.foreground:	#ffff00
+*XmDialogShell.foreground:	#ffff00
+*XmFileSelectionBox.foreground:	#ffff00
+*XmForm.foreground:	#ffff00
+*XmFrame.foreground:	#ffff00
+*XmLabel.foreground:	#ffff00
+*XmLabelGadget.foreground:	#ffff00
+*XmList.foreground:	#ffff00
+*XmMenuShell.foreground:	#ffff00
+*XmMessageBox.foreground:	#ffff00
+*XmPanedWindow.foreground:	#ffff00
+*XmPushButton.foreground:	#ffff00
+*XmPushButtonGadget.foreground:	#ffff00
+*XmRowColumn.foreground:	#ffff00
+*XmSash.foreground:	#ffff00
+*XmScrollBar.foreground:	#ffff00
+*XmScrolledWindow.foreground:	#ffff00
+*XmSelectionBox.foreground:	#ffff00
+*XmSeparator.foreground:	#ffff00
+*XmSeparatorGadget.foreground:	#ffff00
+*XmTearOffButton.foreground:	#ffff00
+*XmTearOffButtonGadget.foreground:	#ffff00
+*XmTextField.foreground:	#ffff00
+*XmText.foreground:	#ffff00
+*XmToggleButton.foreground:	#ffff00
+*XmToggleButtonGadget.foreground:	#ffff00
+XWp*foreground:	#ffff00
+XWp.mainWindowForm.mainWindowMenubar*foreground:	#ffff00
+XWp*menubar*foreground:	#ffff00
+XWp*MenuBar*foreground:	#ffff00
+XWp*popmenu*foreground:	#ffff00
+XWp*XmDialogShell*foreground:	#ffff00
+XWp*XmDialogShell*XmDrawingArea.foreground:	#ffff00
+XWp*XmDialogShell*XmList*foreground:	#ffff00
+XWp*XmDialogShell*XmScrolledWindow*XmDrawingArea.foreground:	#ffff00
+XWp*XmDialogShell*XmTextField*foreground:	#ffff00
+XWp*XmDialogShell*XmText*foreground:	#ffff00
+XWp*XmDrawingArea.foreground:	#ffff00
+XWp*XmList*foreground:	#ffff00
+XWp*XmScrolledWindow*XmDrawingArea.foreground:	#ffff00
+XWp*XmTextField*foreground:	#ffff00
+XWp*XmText*foreground:	#ffff00
+*Canvas.selectforeground:	#ffffff
+*Entry.selectForeground:	#ffffff
+*Listbox.selectForeground:	#ffffff
+*Text.selectForeground:	#ffffff
+
+! Input method
+*inputMethod: skkinput

@@ -1,0 +1,116 @@
+Some notes on setting up Alpine
+(which is sometimes more efficient than Mutt for handling
+IMAP over a slow Internet connection)
+
+Address book
+------------
+
+To convert Mutt aliases to Alpine address book, use this
+command (WARNING: overwrites existing Alpine address book)
+
+grep ^alias .muttrc | sed -e 's/^alias \([^ ][^ ]*\) \([^<][^<]*\)<\([^>]*\)>$/\1'$'\t''\2'$'\t''\3/' -e 's/^alias \([^ ][^ ]*\) \([^ ]*@[^ ]*\)$/\1'$'\t\t''\2/' | tr -d '"' | grep -v ^alias > .addressbook
+
+Folders
+-------
+
+In .pinerc, as well as setting inbox-path, smtp-server etc
+you might want to set this to use remote folders without
+having to qualify them:
+
+    folder-collections={imap.example.net}[]
+
+but note that default-fcc is then a remote folder; if you
+want to omit attachments when writing to it, change any
+"no-fcc-without-attachments" to "fcc-without-attachments"
+in feature-list (that saves having to use ImapFix to do it).
+You might also want to set "mark-fcc-seen" in feature-list.
+
+Also if you don't want Alpine to take over organising
+your old messages, make sure to use the setting:
+
+    pruning-rule=no-no
+
+Postponing messages locally
+---------------------------
+
+If your Internet connection fails while you are writing a
+message, Alpine can be awkward.  To work around this, set
+
+postponed-folder=/path/to/.alpine-postponed
+
+to have Alpine write postponed messages to a file in your
+local home directory (rather than trying to store them on
+the server); it is then possible to postpone the current
+message locally, and resume it once the connection is
+re-established and Alpine is restarted.
+
+Colours
+-------
+
+Below are some light-on-dark colours for the "color"
+section of .pinerc.  (You might also want to set the
+composer-wrap-column option to 1 less than the
+window width you usually use.)
+
+normal-foreground-color=yellow
+normal-background-color=black
+reverse-foreground-color=
+reverse-background-color=
+title-foreground-color=white
+title-background-color=blue
+title-closed-foreground-color=
+title-closed-background-color=
+status-foreground-color=white
+status-background-color=blue
+keylabel-foreground-color=
+keylabel-background-color=
+keyname-foreground-color=yellow
+keyname-background-color=blue
+selectable-item-foreground-color=
+selectable-item-background-color=
+meta-message-foreground-color=yellow
+meta-message-background-color=black
+quote1-foreground-color=cyan
+quote1-background-color=black
+quote2-foreground-color=magenta
+quote2-background-color=black
+quote3-foreground-color=green
+quote3-background-color=black
+incoming-unseen-foreground-color=
+incoming-unseen-background-color=
+signature-foreground-color=white
+signature-background-color=blue
+prompt-foreground-color=
+prompt-background-color=
+header-general-foreground-color=cyan
+header-general-background-color=black
+index-to-me-foreground-color=cyan
+index-to-me-background-color=black
+index-important-foreground-color=red
+index-important-background-color=black
+index-deleted-foreground-color=magenta
+index-deleted-background-color=black
+index-answered-foreground-color=green
+index-answered-background-color=black
+index-new-foreground-color=white
+index-new-background-color=black
+index-recent-foreground-color=yellow
+index-recent-background-color=black
+index-forward-foreground-color=
+index-forward-background-color=
+index-unseen-foreground-color=white
+index-unseen-background-color=black
+index-highpriority-foreground-color=
+index-highpriority-background-color=
+index-lowpriority-foreground-color=
+index-lowpriority-background-color=
+index-arrow-foreground-color=
+index-arrow-background-color=
+index-subject-foreground-color=
+index-subject-background-color=
+index-from-foreground-color=
+index-from-background-color=
+index-opening-foreground-color=
+index-opening-background-color=
+viewer-hdr-colors=
+keyword-colors=

@@ -1,0 +1,3 @@
+[Control Panel\\Desktop]
+"FontSmoothing"="1"
+"FontSmoothingType"=dword:00000001

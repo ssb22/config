@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+
+# This is ~/.message-formatter - a mutt display filter
+# to format an email message for the screen width
+# (C) Silas S. Brown 2007,2010,2012.  Version 1.3.  License: GPL
+
+import sys,os,warnings
+warnings.filterwarnings("ignore","os.popen2 is deprecated")
+try: width = sys.argv[1]
+except: width = "48" # probably means some script without terminal ran mutt in background
+quote_level = -1 # in header
+quote_prefix = []
+para = [] ; para_start = 1
+try: import textwrap
+except: textwrap = None
+
+def output_para(para,quote_prefix):
+  fmt = "fmt -"+width ; para = ''.join(para)
+  if len(para) > 3000: # don't try to optimise, if the paragraph is too big (especially if contains CJK)
+    if textwrap:
+      for l in textwrap.wrap(para,int(width)):
+        print ''.join(quote_prefix)+l
+      return
+    fmt += " -s"
+  if quote_prefix: o,result=os.popen2(fmt+" '--prefix="+''.join(quote_prefix)+"'")
+  else: o,result=os.popen2(fmt)
+  o.write(''.join(para)) ; o.close()
+  sys.stdout.write(result.read())
+
+while 1:
+  r = sys.stdin.readline().replace("\r\n","\n")
+  if not r: break
+  if r=="\n" or r=="-- \n": quote_level,para_start = 0,1
+  new_quote_level = 0 ; new_quote_prefix = []
+  # Figure out the quote type for just this line:
+  for c in r:
+    if c in "|>:}#": new_quote_level += 1
+    elif not c==' ': break
+    new_quote_prefix.append(c)
+  if not new_quote_level==quote_level: para_start=1
+  if para_start and para:
+    # Start of new paragraph, so format the previous one if any
+    output_para(para,quote_prefix)
+    quote_prefix = new_quote_prefix ; new_quote_prefix = []
+    para = []
+  para_start = 0
+  if quote_level==-1 or r=="-- \n" or r=="\n": sys.stdout.write(r)
+  else: para.append(r)
+  if not quote_level==-1: quote_level = new_quote_level
+if para: output_para(para,quote_prefix)

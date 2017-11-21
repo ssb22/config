@@ -1,0 +1,4 @@
+WimpPalette <Obey$Dir>._inverted
+IconSprites <Obey$Dir>._tiles
+WimpVisualFlags -3DWB -WBFC &ffffff -WBOC &ffffff -MBFC &ffffff -MBOC &ffffff
+Set Edit$Options f11 b0 l0 m2 h14 w14  n\FHomerton.Medium

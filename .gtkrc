@@ -1,0 +1,259 @@
+# -*- winmgr -*-
+
+# This is Silas S. Brown's .gtkrc file.  Works as-is for GTK
+# 1.2.  GTK 2.0 looks for this file as .gtkrc-2.0 but from
+# about version 2.4.0 uses X resources instead; however it's
+# still useful to have this file as a fallback because some
+# versions of GTK don't do everything right from Xresources
+# (e.g. I've known tooltip popups to be unreadable without
+# this file).
+
+# NB: Order is important.  If you move "default" to the
+# bottom then it will override everything else.
+# (Unfortunately this also means that we can't use this to
+# stop applications programmers from loading their own
+# resource files or hard-coding them)
+
+style "default" {
+  # I started out with this default style
+  # before I found out about the various widgets.
+  # I'm leaving it in here as a "catch-all" case for
+  # things I've missed.
+  fg[NORMAL]       = "#ffff00"
+  bg[NORMAL]       = "#600090"
+# bg NOT black, because there's a "use black for icons" bug in the gimp
+# 2000-06-09: actually it's in the class *GtkRadioButton
+# but the problem might be wider than that
+#  base[NORMAL]     = "#E5E5F7"
+  base[NORMAL]     = "#000000"
+  text[NORMAL]     = "#ffff00"
+# BASE is used for background in list boxes etc
+# TEXT is used as the foreground for widgets that use BASE as bg colour
+
+  fg[ACTIVE]       = "#FFFF00"
+  bg[ACTIVE]       = "#00C050"
+  base[ACTIVE]     = "#D3D3DD"
+  text[ACTIVE]     = "#ffff00"
+
+  fg[PRELIGHT]     = "#FFFF00"
+  bg[PRELIGHT]     = "#0000FF" # progress indicator, menu bkg, icon under mouse
+  base[PRELIGHT]   = "#FF0000"
+# 003070 nice, but poor contrast with the purple
+  text[PRELIGHT]    = "#ffff00"
+
+  fg[SELECTED]     = "#FFFFFF"
+  bg[SELECTED]     = "#336699"
+  text[SELECTED]     = "#ffffff"
+
+  fg[INSENSITIVE]  = "#747474"
+  bg[INSENSITIVE]  = "#0000DD"
+  base[INSENSITIVE]= "#0000DD"
+  text[INSENSITIVE]= "#FF9000"
+  font = "-adobe-helvetica-medium-r-normal--*-180-*-*-*-*-iso8859-1"
+}
+widget "*" style "default"
+
+#######################################################
+
+style "tooltips" = "default" {
+  bg[NORMAL] = "#ffd000"
+  fg[NORMAL] = "#000000"
+}
+widget "gtk-tooltips*" style "tooltips"
+
+#######################################################
+
+style "tree" = "default" {
+  # Trees insist on drawing black lines
+  # so we can't have a black background
+  base[NORMAL] = "#800080"
+}
+widget "*GtkTree"  style "tree"
+widget "*GtkCTree" style "tree"
+
+#######################################################
+
+style "text" = "default" {
+# Theoretically we can just set this to yellow on black.
+# However, some applications (such as testgtk) set the
+# text foreground colour to black and ignore the background.
+# So we'd better not have a black background.
+# I haven't seen many apps that do this, though, so I'm
+# setting the background fairly dark.
+  base[NORMAL]     = "#404030"
+  fg[NORMAL]       = "#ffff00"
+  text[NORMAL]     = "#ffff00"
+
+  fg[SELECTED]     = "#FFFF00"
+  bg[SELECTED]     = "#113399"
+}
+widget "*GtkText" style "text"
+
+#######################################################
+
+# Let's make rulers a little different from the surrounding area
+# (it would be nice if we could make those arrows bigger, but ...)
+style "ruler" = "default" {
+  bg[NORMAL]     = "#703000"
+}
+widget "*GtkHRuler" style "ruler"
+widget "*GtkVRuler" style "ruler"
+
+#######################################################
+
+# Menus.  In testgtk this affects the menus themselves but
+# not the menubar; in gimp it affects neither.  *GtkMenubar
+# and *Gtk*Item doesn't have an effect; neither does base.
+style "menus" = "default" {
+  bg[NORMAL] = "#606060"
+}
+widget "*GtkMenu"            style "menus"
+
+# HSeparator is not used in menus - only in windows
+
+style "hline" = "default" {
+  bg[NORMAL] = "#50FFFF"
+}
+widget "*GtkHSeparator" style "hline"
+
+#######################################################
+
+# Don't want *too* much of that purple
+# Window backgrounds sometimes have to contrast with text
+style "window" = "default" {
+  bg[NORMAL] = "#505550"
+}
+widget "*GtkWindow"         style "window"
+widget "*GtkCalendar"       style "window"  # not tested
+widget "*GtkFileSelection*" style "window"
+# widget "*GtkHPaned"          style "testing"
+# widget "*GtkVPaned"          style "testing"
+# 
+# widget "*GtkFrame"           style "testing"
+# widget "*GtkTable"           style "window"
+# widget "*GtkLayout"          style "window"
+# widget "*GtkScrolledWindow"  style "testing"
+# widget "*GtkHBox"            style "window"
+# widget "*GtkVBox"            style "window"
+# widget "*GtkViewport"        style "testing"
+# widget "*GtkVSeparator"      style "testing"
+
+#######################################################
+
+# The background of a progress bar is bg[NORMAL]
+# and the bar itself is in bg[PRELIGHT]
+style "progress" = "default" {
+  bg[PRELIGHT] = "#FF5000"
+  bg[NORMAL] = "#606000"
+}
+widget "*GtkProgressBar" style "progress"
+
+#######################################################
+
+# These floating widgets are different, so let's make it obvious
+style "floater" = "default" {
+  bg[NORMAL] = "#4488FF"
+}
+widget "*GtkHandleBox"       style "floater"
+widget "*GtkTearOffMenuItem" style "floater"
+
+#######################################################
+
+# Toggle buttons: Yellow on green is unclear, so change it
+# When switched on, toggle buttons use fg[ACTIVE] for the text
+# and bg[ACTIVE] for the background
+# but fg[ACTIVE] doesn't seem to work here
+# Also setting bg[NORMAL] differently (there is no other indication
+# that it is a toggle button)
+style "togglebutton" = "default" {
+  bg[NORMAL] = "#204590"
+  bg[ACTIVE] = "#A04000"
+}
+widget "*GtkToggleButton" style "togglebutton"
+
+#######################################################
+
+# A check box uses bg[NORMAL] and bg[ACTIVE]
+# (and black for 3D effects)
+style "checkbox" = "default" {
+  bg[NORMAL] = "#40C040"
+  bg[ACTIVE] = "#FF8040"
+}
+# widget "*GtkCheckButton" style "checkbox"
+
+# Actually, it might aid consistency to make them the same
+# scheme as toggle buttons
+widget "*GtkCheckButton" style "togglebutton"
+
+# Spin buttons might as well be given the same too
+# (these are the things where you can click on the arrows
+# to move a number up or down)
+widget "*GtkSpinButton" style "togglebutton"
+
+#######################################################
+
+# The background to the colour selection dialogue needs to
+# be as "dull" as possible
+# fg sets the text colour, but it must contrast with the
+# value box background (if this is given after the box)
+style "coloursel" = "default" {
+  bg[NORMAL] = "#636163"
+  fg[NORMAL] = "#00FF00"
+}
+widget "*GtkColorSelection*" style "coloursel"
+
+#######################################################
+
+# Notebook is a multi-modal dialogue thing
+# Uses bg[NORMAL] for the selected tab and its page
+# and bg[ACTIVE] for the other tabs
+# Uses black lines
+# Foreground doesn't seem to be settable
+style "multimode" = "default" {
+  bg[ACTIVE]="#0025A0"
+  bg[NORMAL]="#636163"
+}
+widget "*GtkNotebook" style "multimode"
+
+# Might as well give the font selector the same thing
+widget "*GtkFontSelection*" style "multimode"
+
+#######################################################
+
+# Buttons
+style "button" = "default" {
+  bg[NORMAL] = "#600040"
+  bg[ACTIVE] = "#C02000"
+  fg[ACTIVE] = "#00FF00"
+}
+widget "*GtkButton"          style "button"
+
+#######################################################
+
+# Scroll bars are printed on a background of bg[ACTIVE]
+# The bar and the arrows are bg[NORMAL]
+# and prelit with bg[PRELIGHT]
+style "scrollbar" = "default" {
+  bg[ACTIVE] = "#303030"
+  bg[NORMAL] = "#00C0FF"
+  bg[PRELIGHT] = "#803000"
+}
+widget "*GtkHScrollbar" style "scrollbar"
+widget "*GtkVScrollbar" style "scrollbar"
+# Might as well have sliding scales the same:
+widget "*GtkHScale"     style "scrollbar"
+widget "*GtkVScale"     style "scrollbar"
+
+#######################################################
+
+# widget "*GtkRadioButton"     style "testing"
+# don't touch radio buttons
+
+# widget "*GtkCList"           style "testing"
+# widget "*GtkList"            style "testing"
+# widget "*GtkCombo"           style "testing"
+# widget "*GtkEntry"           style "testing"
+
+# widget "*GtkToolbar"         style "testing"
+
+# GtkStatusBar doesn't seem to be configurable

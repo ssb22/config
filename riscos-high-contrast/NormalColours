@@ -1,0 +1,8 @@
+WimpPalette <Obey$Dir>._default
+WimpKillSprite tile_1
+WimpKillSprite tile_1-4
+WimpKillSprite tile_1-8
+WimpKillSprite tile_1-16
+WimpKillSprite tile_1-32
+WimpVisualFlags -all
+Set Edit$Options f9 b7 l0 m2 h14 w14  n\FHomerton.Medium

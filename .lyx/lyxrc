@@ -1,0 +1,33 @@
+# This is Silas Brown's .lyxrc, for 21" monitor running 640x480 with large
+# virtual desktop.
+
+\screen_dpi "100"
+\screen_zoom "144"
+# (so 10pt is 20 pixels)
+\screen_font_scalable "false"
+# \screen_font_roman "-*-charter"
+\screen_font_roman "-*-times"
+\screen_font_sans "-*-helvetica"
+\screen_font_typewriter "-*-courier"
+
+# From version 1.1.5fix1, LyX has the colours here instead
+# of in Xresources.  (Version 1.1.5 can't change the colours
+# at all, although 1.1.4 can.)  You can't change the cursor
+# from being black in 1.1.5 (fix1+).  Version 1.1.6 has a
+# preferences dialogue but saving them is buggy; it's better
+# in 1.1.6fix3.  I recommend using version 1.1.4, or at
+# least version 1.1.6fix3.  If you do have version 1.1.5
+# then uncomment the following lines.  (They are otherwise
+# harmless but create warning messages.)
+# (Note: Quotes are necessary in 1.1.5fix1 but not in fix2)
+
+\set_color "background" "darkblue"
+\set_color "foreground" "white"
+\set_color "latex"      "cyan"
+\set_color "math"       "green"
+\set_color "mathline"   "green"
+\set_color "mathbg"     "black"
+\set_color "mathframe"  "red"
+\set_color "mathcursor" "white"
+\set_color "selection"  "blue"
+\set_color "note" "yellow"

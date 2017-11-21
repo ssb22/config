@@ -1,0 +1,35 @@
+Submitted to http://debbugs.gnu.org/cgi/bugreport.cgi?bug=13840 on 2013-03-15
+
+(One developer said this patch is incorrect; another said
+the problem was fixed in trunk.  Since then we've had a
+release of 24.4, which indeed fixes the bug.  However, 24.4
+also introduces a new bug when used with Mac's Zoom function,
+reported to http://debbugs.gnu.org/cgi/bugreport.cgi?bug=18833
+on 2014-10-25; also http://comments.gmane.org/gmane.emacs.aquamacs.devel/992
+(24.5 still has this bug although it's less serious because the
+mouse needs moving only 1 pixel more to pop up the correct menu.
+That's still the case as of 25.1 (hold down mouse while moving a pixel).)
+(Bug becomes more serious in 25.2: clicking to the right of the
+menu bar can sometimes lock up Emacs.)
+
+Meanwhile 24.3rc3 + this patch seems to work for me for now.
+
+(I incorrectly said "23.3rc3" there in some previous versions;
+that was a typo: I meant 24.3rc3.))
+
+Tested on emacs-24.3rc3, do:
+patch src/nsterm.m < patchfile
+./configure --with-ns
+make install
+
+--- emacs-24.3/src/nsterm.m~	2013-01-04 09:38:13.000000000 +0000
++++ emacs-24.3/src/nsterm.m	2013-03-15 11:29:10.000000000 +0000
+@@ -3461,7 +3461,7 @@
+       if (writefds && FD_ISSET(k, writefds)) ++nr;
+     }
+ 
+-  if (NSApp == nil
++  if (NSApp == nil || apploopnr != 0
+       || (timeout && timeout->tv_sec == 0 && timeout->tv_nsec == 0))
+     return pselect (nfds, readfds, writefds, exceptfds, timeout, sigmask);
+ 

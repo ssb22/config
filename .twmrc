@@ -1,0 +1,116 @@
+
+# This is Silas S. Brown's .twmrc file
+
+# General characteristics:
+
+AutoRelativeResize
+NoRaiseOnMove
+OpaqueMove
+RestartPreviousState
+
+NoGrabServer
+RandomPlacement
+IconManagerGeometry	"120x10-0+120"
+IconifyByUnMapping
+
+DecorateTransients
+TitleFont "-*-*-*-r-*-*-*-200-*-*-*-*-*-*"
+ResizeFont "-*-*-*-r-*-*-*-200-*-*-*-*-*-*"
+MenuFont "-*-*-*-r-*-*-*-200-*-*-*-*-*-*"
+IconFont "-*-*-*-r-*-*-*-200-*-*-*-*-*-*"
+IconManagerFont "-*-*-*-r-*-*-*-200-*-*-*-*-*-*"
+
+# ######################################################
+# The following (from here to the end of the file) was
+# modified from the default
+# ######################################################
+
+Color
+{
+    BorderColor "slategrey"
+    DefaultBackground "rgb:1/3/3"
+    DefaultForeground "yellow"
+    TitleBackground "rgb:1/3/a" # was 2/a/9 in all cases
+    TitleForeground "yellow"
+    MenuBackground "rgb:7/0/0"
+    MenuForeground "yellow"
+#    MenuTitleBackground "gray70"
+#    MenuTitleForeground "rgb:2/a/9"
+    IconBackground "rgb:7/0/0"
+    IconForeground "yellow"
+    IconBorderColor "gray85"
+    IconManagerBackground "rgb:2/0/9"
+    IconManagerForeground "yellow"
+}
+
+# If all else fails pop up a menu:
+DefaultFunction f.menu "RootMenu"
+
+# Syntax for a button definition:
+# Button = KEYS	: CONTEXT	: FUNCTION
+
+# On the root window:
+Button1	=	: root		: f.menu "RootMenu"
+#Button2=	: root		: f.menu "RootMenu"
+Button3	=	: root		: f.menu "OperationsMenu"
+
+# On the title bar or window frame:
+Button1	=	: title|frame	: f.raiselower
+Button2	=	: title|frame	: f.move
+Button3	=	: title|frame	: f.menu "WindowMenu"
+
+# With control or meta on the title bar or window frame:
+Button1 = c|m	: title|frame	: f.zoom
+Button2 = c|m	: title|frame	: f.zoom
+Button3 = c|m	: title|frame	: f.iconify
+
+# Shift-click on the window
+Button1 = m : window : f.move
+Button1 = m : title|frame : f.move
+Button3 = s : window : f.menu "WindowMenu"
+Button3 = s : title|frame : f.menu "WindowMenu"
+
+# What's in the menus:
+menu "RootMenu" 
+{
+"xterm"		!"xterm -ls&"
+"xemacs"    !"xemacs&"
+}
+
+menu "WindowMenu"
+{
+"Refresh"	f.winrefresh
+"Zoom"		f.zoom
+"Iconify"	f.iconify
+"Move"		f.move
+"Resize"	f.resize
+"Front"		f.raise
+"Back"		f.lower
+""		f.nop
+"Quit"		f.delete
+}
+
+menu "OperationsMenu"
+{
+#"Operations"		f.title
+"Reread .Xresources"	!"xrdb -load .Xresources&"
+"Window List"		f.menu "TwmWindows"
+"Show Icon Mgr."	f.showiconmgr
+"Reread .twmrc"		f.twmrc
+#"Delete window"	f.delete
+"Destroy window"	f.destroy
+"Quit X11"		f.quit
+"Redisplay Screen"	f.refresh
+}
+
+NoTitle
+{
+"xbiff"
+"xclock"
+}
+
+IconManagerDontShow
+{
+"xbiff"
+"xclock"
+}
