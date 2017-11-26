@@ -17,4 +17,4 @@ cp -a jedrc.txt .jedrc
 cp -a tmuxconf.txt .tmux.conf
 cd riscos-high-contrast ; unzip -o ../high-contrast.zip ; git add * ; cd ..
 tar -zxvf emacs.tgz ; git add .xemacs/*
-git commit -am update && git push
+git commit -am "Update $(echo $(git diff|grep '^--- a/'|sed -e 's,^--- a/,,')|sed -e 's/ /, /g')" && git push
