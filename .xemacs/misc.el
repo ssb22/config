@@ -7,7 +7,7 @@
 ;; See my website for details on tested Emacs setups.
 ;; No warranty.
 
-;; Time-stamp: <2016-10-04>
+;; Time-stamp: <2018-09-01>
 
 ;; ***********************************************
 ;; Protect against sloppy keypresses:
@@ -191,8 +191,7 @@
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
 ;; Enable visiting compressed files
-(condition-case nil (require 'jka-compr) (error nil))
-(jka-compr-install)
+(condition-case nil (progn (require 'jka-compr) (jka-compr-install)) (error nil))
 
 (condition-case nil (require 'tramp) (error nil))
 ;; Don't use tramp-util for tramp-compile - xemacs21.4.17 it's not asynchronous (use "compile" with the ssh commands instead)
@@ -493,27 +492,28 @@
 ;; (tested on Aquamacs 24 based on GNU Emacs 23,
 ;;  and Aquamacs 3.3 based on GNU Emacs 25.1.1)
 (condition-case nil (run-at-time "1 sec" nil (lambda nil (setq select-enable-clipboard t))) (error nil)) ;; needed on 3.3 (1-second delay to work around something that sets it back to nil on startup after init.el has finished)
-(condition-case nil (progn
+(condition-case nil (run-at-time "1 sec" nil (lambda nil (condition-case nil (cua-mode -1) (error nil)))) (error nil)) ;; ditto on 3.4: we want C-x C-x 'swap' to work
 (defun savehist-save (x) nil) ;; (otherwise Aquamacs 2.4 can't quit if it's running on a filesystem that won't let it chmod the minibuffer-history file)
 (setq-default cursor-type 'box) ;; (might be useful on other emacsen too)
-(aquamacs-autoface-mode -1)
-(global-smart-spacing-mode -1)
-(global-visual-line-mode -1)
-(one-buffer-one-frame-mode -1)
-(osx-key-mode -1)
-(set-face-attribute 'echo-area nil :family 'unspecified) ;; (otherwise dances up and down whenever used)
+(condition-case nil (aquamacs-autoface-mode -1) (error nil))
+(condition-case nil (global-smart-spacing-mode -1) (error nil))
+(condition-case nil (global-visual-line-mode -1) (error nil))
+(condition-case nil (one-buffer-one-frame-mode -1) (error nil))
+(condition-case nil (osx-key-mode -1) (error nil))
+(condition-case nil (set-face-attribute 'echo-area nil :family 'unspecified) (error nil)) ;; (otherwise dances up and down whenever used)
 (setq special-display-regexps nil)
 (setq-default aquamacs-ring-bell-on-error-flag t)
 (setq ring-bell-function nil)
-(smart-frame-positioning-mode -1)
-(tabbar-mode -1)
-(remove-hook 'text-mode-hook 'smart-spacing-mode)
-(remove-hook 'text-mode-hook 'auto-detect-wrap)
-(remove-hook 'text-mode-hook 'visual-line-mode)
-(add-hook 'html-helper-mode-hook '(lambda () (condition-case nil (html-mode) (error nil))))
-(fringe-mode 'default)
-(let ((el (assoc 'empty-line default-fringe-indicator-alist)) (co (assoc 'continuation default-fringe-indicator-alist))) (if el (setcdr el nil)) (if co (setcdr co '(left-curly-arrow right-curly-arrow)))) ;; Aquamacs' ellipses are hard for low vision, + the empty-line thing can be too stripey for nystagmus
+(setq ns-command-modifier 'meta) ;; NextStep (Mac) Command key is meta not alt
+(setq ns-use-mac-modifier-symbols nil)
+(condition-case nil (smart-frame-positioning-mode -1) (error nil))
+(condition-case nil (tabbar-mode -1) (error nil))
+(condition-case nil (remove-hook 'text-mode-hook 'smart-spacing-mode) (error nil))
+(condition-case nil (remove-hook 'text-mode-hook 'auto-detect-wrap) (error nil))
+(condition-case nil (remove-hook 'text-mode-hook 'visual-line-mode) (error nil))
+(condition-case nil (add-hook 'html-helper-mode-hook '(lambda () (condition-case nil (html-mode) (error nil)))) (error nil))
+(condition-case nil (fringe-mode 'default) (error nil))
+(condition-case nil (let ((el (assoc 'empty-line default-fringe-indicator-alist)) (co (assoc 'continuation default-fringe-indicator-alist))) (if el (setcdr el nil)) (if co (setcdr co '(left-curly-arrow right-curly-arrow)))) (error nil)) ;; Aquamacs' ellipses are hard for low vision, + the empty-line thing can be too stripey for nystagmus
 (setq-default ispell-program-name "aspell") ;; you'll need to set up cocoAspell or something
 ;; TODO: make the modeline font a bit larger! (changing faces here doesn't seem to take effect)
 ;; TODO: rename the Window menu back to Buffers
-) (error nil))
