@@ -10,7 +10,7 @@
 ;; (large print, increasing real-estate, user functions
 ;; (reflow) &c)
 
-;; Time-stamp: <2016-09-21>
+;; Time-stamp: <2018-09-10>
 
 ;; ***********************************************
 ;; Large fonts
@@ -141,7 +141,7 @@
 (if xemacs-betaname (defun mouse-drag-modeline (arg) t)) ;; desperate hack because some FC6 ship with beta versions where this is broken (xemacs segfaults when click the modeline)
 (error nil))
 
-;; Font settings (see .Xresources for notes on why the 20)
+;; Font settings:
 (defun pc-default-font ()
   (interactive)
   (condition-case nil
@@ -154,9 +154,12 @@
   ;; (might need to be adjusted on some systems)
   (set-face-attribute 'default nil :font "Monospace-16")
   ;; else
-  ;; This works in FSF Emacs 23 in high-res high-DPI screens (assumes DPI is set correctly)
+  ;; This works in FSF Emacs 23 in high-res high-DPI screens (assumes DPI is set high)
   (set-face-attribute 'default nil :font "Monospace-12")
+  ;; If DPI is not set high, you might need to set this to something like
+  ;; (set-face-attribute 'default nil :font "Monospace-26")
   ))
+  ;; Fallback for older bitmap-only systems (see .Xresources for notes on why the 20)
   (error (condition-case nil (progn
   (set-face-font (make-face 'default) (make-font-instance "-*-fixed-medium-r-normal-*-20-*-100-*-c-*-*-*"))
   ;; Need a proportional font for the modeline so that more
