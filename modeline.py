@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 # Modeline for old PC connected to Philips 192EL2 monitor
 
 freq_khz = 47.71 # from the monitor spec
