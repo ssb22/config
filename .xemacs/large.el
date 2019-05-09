@@ -10,7 +10,7 @@
 ;; (large print, increasing real-estate, user functions
 ;; (reflow) &c)
 
-;; Time-stamp: <2018-09-10>
+;; Time-stamp: <2019-05-08>
 
 ;; ***********************************************
 ;; Large fonts
@@ -396,7 +396,7 @@
   (find-file "~/.vm.windows")
   (insert (format "((default (nil (((- (0 0 %d %d) (0 %d %d %d)) ((nil summary) (nil message)) ((nil nil nil t) (nil nil nil nil)))))) (composing-message ((((top . 70) (left . 70))) (((0 0 %d %d) ((nil composition)) ((nil nil nil t)))))) (editing-message ((((top . 70) (left . 70))) (((0 0 %d %d) ((nil edit)) ((nil nil nil t)))))))" (+ w 2) (/ h 3) (/ h 3) (+ w 2) (- h 1) w h w h))
   (save-buffer) (kill-buffer nil)
-  ) (error nil)))
+  )))
 
 (defun small-frame ()
   "Set a frame size that will fit in 640x480 at 20px font (so don't have to scroll around with mouse)"
