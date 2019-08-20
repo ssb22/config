@@ -23,7 +23,7 @@
 " Ctrl-w q (:q) = close window
 " Ctrl-w +/-/= to change or equalise window sizes
 
-" :e filename (has tab completion), closes/opens
+" :e filename (has tab completion)
 "   (or switches buffer if it's open in another window)
 " :sp filename (w.tab) splits window and opens
 " :3sp [filename] new 3-line window
@@ -32,7 +32,7 @@
 " :tabe filename , gt , gT = tab switch (layouts)
 
 " or if load multiple files from command line,
-" :n,:N = close and switch, :args = current filename
+" :n,:N = switch, :args = current filename
 " (use vim -p to open them in tabs instead)
 
 :syntax on  " syntax highlighting
@@ -44,8 +44,13 @@
 :set expandtab
 
 :set incsearch " incremental search with / and ?
+:set hlsearch  " highlight all matches
 :set smartcase " use case if any caps used
 " (:set ignorecase, :set noignorecase)
 
-:set textwidth=0
-" (use screen width to determine text width)
+:set textwidth=0 " (use screen width to get text width)
+map <Space> <PageDown>
+" (like 'less' etc)
+:set hidden " keep hidden buffers loaded
+:set backspace=2
+:set ruler " show cursor pos
