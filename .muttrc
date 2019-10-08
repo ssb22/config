@@ -157,16 +157,24 @@ set print = 'yes';
 set print_decode = 'no';
 set print_split = 'no';
 set wait_key = 'yes';
+
+# Uncomment one of these:
+
+# Option 1: run Firefox locally if X display is present, else print URL using hostname
 #set print_command='cd $(mktemp -d ~/public_html/mailXXX);mhonarc -;echo;if [ a$DISPLAY = a -o ! -e /usr/bin/firefox ];then echo http://$(hostname -f)/~$(whoami)/$(pwd|sed -e "s-.*/--")/maillist.html; else firefox file://$(pwd)/maillist.html;fi;echo When done: rm -r $(pwd)';
- set print_command="cd $(mktemp -d ~/public_html/mailXXX);sed -e $'s/\\f/From \\\\n/'|LANG=C mhonarc -;[ a\$WEB = a ]&&export WEB=$(hostname -f);echo;echo http://\$WEB/~$(whoami)/$(pwd|sed -e 's-.*/--')/maillist.html;echo Then rm -r $(pwd)";
-# Note: the above CANNOT be made much longer, because some versions of mutt will truncate it.  (And that happens after expansion of environment variables, hence escaping some of those $'s)
-# If you need to do more then make a separate script and call that.
-# (The second version allows you to set WEB to the webserver's name if different from hostname -f)
-# (NB some versions of mktemp won't accept fewer than 3 X characters)
 
 # If you've installed MHonarc on a Mac, you might prefer:
 # set wait_key = 'no';
 # set print_command="cd $(mktemp -d /tmp/mailXXX);sed -e $'s/\\f/From \\\\n/'|LANG=C mhonarc - >/dev/null 2>/dev/null;open maillist.html";
+
+# Option 2: as above but if WEB environment variable is present it overrides hostname
+#set print_command="cd $(mktemp -d ~/public_html/mailXXX);sed -e $'s/\\f/From \\\\n/'|LANG=C mhonarc -;[ a\$WEB = a ]&&export WEB=$(hostname -f);echo;echo http://\$WEB/~$(whoami)/$(pwd|sed -e 's-.*/--')/maillist.html;echo Then rm -r $(pwd)";
+# Note: the above CANNOT be made much longer, because some versions of mutt will truncate it.  (And that happens after expansion of environment variables, hence escaping some of those $'s.  Some versions of mktemp won't accept fewer than 3 X characters.)
+
+# Option 3: as above but WEB is compulsory, must be a user-specific subdomain and must also accept SSH logins (use .ssh/config if necessary). For running mutt remotely on a server that is not itself a web server but has SSH access to one.
+set print_command="cd \$(mktemp -d);chmod 700 .;sed -e $'s/\\f/From \\\\n/'|LANG=C mhonarc -;echo;echo -n http://\$WEB/;tar -c .|ssh \$WEB 'cd \$(mktemp -d ~/public_html/mailXXX)&&tar -x;chmod a+rx * .;pwd|sed -e s,.*/,,'";
+
+# If you need to do more then make a separate script and call that.
 
 # NB if your MHonarc mangles UTF-8 messages, you might have to export M2H_RCFILE to a file containing
 # the contents of http://www.mhonarc.org/MHonArc/doc/rcfileexs/utf-8-encode.mrc.html
