@@ -2,10 +2,9 @@
 
 # This is ~/.message-formatter - a mutt display filter
 # to format an email message for the screen width
-# (C) Silas S. Brown 2007,2010,2012.  Version 1.3.  License: GPL
+# (C) Silas S. Brown 2007,2010,2012,2020.  Version 1.4.  License: GPL
 
-import sys,os,warnings
-warnings.filterwarnings("ignore","os.popen2 is deprecated")
+import sys,os,subprocess
 try: width = sys.argv[1]
 except: width = "48" # probably means some script without terminal ran mutt in background
 quote_level = -1 # in header
@@ -19,17 +18,21 @@ def output_para(para,quote_prefix):
   if len(para) > 3000: # don't try to optimise, if the paragraph is too big (especially if contains CJK)
     if textwrap:
       for l in textwrap.wrap(para,int(width)):
-        print ''.join(quote_prefix)+l
+        print (''.join(quote_prefix)+l)
       return
     fmt += " -s"
-  if quote_prefix: o,result=os.popen2(fmt+" '--prefix="+''.join(quote_prefix)+"'")
-  else: o,result=os.popen2(fmt)
-  o.write(''.join(para)) ; o.close()
-  sys.stdout.write(result.read())
+  if quote_prefix: cmd = fmt+" '--prefix="+''.join(quote_prefix)+"'"
+  else: cmd = fmt
+  sp=subprocess.Popen(cmd,shell=True,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,universal_newlines=True)
+  if type(u"")==type(""): out,err = sp.communicate(''.join(para)) # Python 3
+  else: out,err = sp.communicate(''.join(para).encode('utf-8')) # Python 2
+  sys.stdout.write(out)
 
 while 1:
   r = sys.stdin.readline().replace("\r\n","\n")
   if not r: break
+  try: r = r.decode('utf-8') # for Python 2
+  except: pass # Python 3 already decoded, or not UTF-8
   if r=="\n" or r=="-- \n": quote_level,para_start = 0,1
   new_quote_level = 0 ; new_quote_prefix = []
   # Figure out the quote type for just this line:
@@ -44,7 +47,9 @@ while 1:
     quote_prefix = new_quote_prefix ; new_quote_prefix = []
     para = []
   para_start = 0
-  if quote_level==-1 or r=="-- \n" or r=="\n": sys.stdout.write(r)
+  if quote_level==-1 or r=="-- \n" or r=="\n":
+    if type(u"")==type(""): sys.stdout.write(r) # Python 3
+    else: sys.stdout.write(r.encode('utf-8')) # Python 2
   else: para.append(r)
   if not quote_level==-1: quote_level = new_quote_level
 if para: output_para(para,quote_prefix)
