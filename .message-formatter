@@ -2,7 +2,7 @@
 
 # This is ~/.message-formatter - a mutt display filter
 # to format an email message for the screen width
-# (C) Silas S. Brown 2007,2010,2012,2020.  Version 1.4.  License: GPL
+# (C) Silas S. Brown 2007,2010,2012,2020.  Version 1.41.  License: GPL
 
 import sys,os,subprocess
 try: width = sys.argv[1]
@@ -18,7 +18,9 @@ def output_para(para,quote_prefix):
   if len(para) > 3000: # don't try to optimise, if the paragraph is too big (especially if contains CJK)
     if textwrap:
       for l in textwrap.wrap(para,int(width)):
-        print (''.join(quote_prefix)+l)
+        p=''.join(quote_prefix)+l
+        if type(p)==type(u"") and not type("")==type(u""): p=p.encode("utf-8")
+        print(p)
       return
     fmt += " -s"
   if quote_prefix: cmd = fmt+" '--prefix="+''.join(quote_prefix)+"'"
