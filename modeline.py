@@ -1,4 +1,5 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
+# (should work on either Python 2 or Python 3)
 
 # Modeline for old PC connected to Philips 192EL2 monitor
 
@@ -17,7 +18,7 @@ top_margin = 8   # xtimings standard
 total_hpx = hres+rhs_margin+sync_len+lhs_margin
 clock_mhz = freq_khz*1000*total_hpx/1000000
 
-print 'Modeline "%dx%d" %.2f %d %d %d %d %d %d %d %d doublescan' % (hres,vres,
+print ('Modeline "%dx%d" %.2f %d %d %d %d %d %d %d %d doublescan' % (hres,vres,
 clock_mhz,
 hres, hres+rhs_margin, hres+rhs_margin+sync_len, total_hpx,
-vres, vres+btm_margin, vres+btm_margin+vsync_len, vres+btm_margin+vsync_len+top_margin)
+vres, vres+btm_margin, vres+btm_margin+vsync_len, vres+btm_margin+vsync_len+top_margin))
