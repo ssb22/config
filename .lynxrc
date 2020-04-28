@@ -1,3 +1,9 @@
 # This is Silas S. Brown's .lynxrc file
+
+# Where to find history:
+# on GitHub at https://github.com/ssb22/config
+# and on GitLab at https://gitlab.com/ssb22/config
+# and on BitBucket https://bitbucket.org/ssb22/config
+
 # Set an external editor - useful for pressing Ctrl-x e while in text areas.
 file_editor=`which jed||which jmacs||which emacs||which xemacs`

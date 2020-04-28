@@ -2,6 +2,11 @@
 # (i.e. not many rows and columns available)
 # (C) Silas S. Brown 2007,2009-2013,2016, version 1.44, License: GPL
 
+# Where to find history:
+# on GitHub at https://github.com/ssb22/config
+# and on GitLab at https://gitlab.com/ssb22/config
+# and on BitBucket https://bitbucket.org/ssb22/config
+
 # avoid index taking up too much space when reading the message underneath:
 set pager_index_lines = 5 ;
 # (mutt default is 0, but some packages increase that quite a lot, so let's set it low)

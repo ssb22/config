@@ -1,4 +1,4 @@
-! -*- xrdb -*-
+! -*- conf-xdefaults -*-
 
 ! This is Silas S. Brown's X resources file.
 ! This is meant for large monitor and low-res virtual desktop
@@ -8,6 +8,11 @@
 ! If this command is in your .xsession (or similar)
 ! near the start, then the settings should take place
 ! every time you log in.
+
+! Where to find history:
+! on GitHub at https://github.com/ssb22/config
+! and on GitLab at https://gitlab.com/ssb22/config
+! and on BitBucket https://bitbucket.org/ssb22/config
 
 ! ------------------------------------------------------
 

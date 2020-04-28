@@ -22,3 +22,8 @@ print ('Modeline "%dx%d" %.2f %d %d %d %d %d %d %d %d doublescan' % (hres,vres,
 clock_mhz,
 hres, hres+rhs_margin, hres+rhs_margin+sync_len, total_hpx,
 vres, vres+btm_margin, vres+btm_margin+vsync_len, vres+btm_margin+vsync_len+top_margin))
+
+# Where to find history:
+# on GitHub at https://github.com/ssb22/config
+# and on GitLab at https://gitlab.com/ssb22/config
+# and on BitBucket https://bitbucket.org/ssb22/config

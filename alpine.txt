@@ -114,3 +114,9 @@ index-opening-foreground-color=
 index-opening-background-color=
 viewer-hdr-colors=
 keyword-colors=
+
+Where to find history of this file
+----------------------------------
+on GitHub at https://github.com/ssb22/config
+and on GitLab at https://gitlab.com/ssb22/config
+and on BitBucket https://bitbucket.org/ssb22/config

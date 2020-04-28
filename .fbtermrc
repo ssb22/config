@@ -8,3 +8,8 @@ cursor-interval=0
 # fbterm_ucimf tends to crash (at least when a pinyin.cin is
 # put into ~/.openvanilla/OVIMGeneric/), and fcitx-fbterm
 # needs fcitx which needs dbus which needs X11 :-(
+
+# Where to find history of this file:
+# on GitHub at https://github.com/ssb22/config
+# and on GitLab at https://gitlab.com/ssb22/config
+# and on BitBucket https://bitbucket.org/ssb22/config

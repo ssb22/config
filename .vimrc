@@ -35,6 +35,11 @@
 " :n,:N = switch, :args = current filename
 " (use vim -p to open them in tabs instead)
 
+" Where to find history of this file:
+" on GitHub at https://github.com/ssb22/config
+" and on GitLab at https://gitlab.com/ssb22/config
+" and on BitBucket https://bitbucket.org/ssb22/config
+
 :syntax on  " syntax highlighting
 
 :set autoindent " (use   :set paste   to turn off)

@@ -4,6 +4,11 @@
 # to format an email message for the screen width
 # (C) Silas S. Brown 2007,2010,2012,2020.  Version 1.41.  License: GPL
 
+# Where to find history:
+# on GitHub at https://github.com/ssb22/config
+# and on GitLab at https://gitlab.com/ssb22/config
+# and on BitBucket https://bitbucket.org/ssb22/config
+
 import sys,os,subprocess
 try: width = sys.argv[1]
 except: width = "48" # probably means some script without terminal ran mutt in background

@@ -3,3 +3,8 @@ WRAP = SCREEN_WIDTH; % (does not always work in all versions of jed, but try)
 HORIZONTAL_PAN = -1; % better than panning just one line; still waiting for the option to continue a line rather than pan
 map_input (8, 127); % set Ctrl-H to backspace in case of misconfigured terminal
 LINENUMBERS = 2; % show line and column
+
+% Where to find history of this file:
+% on GitHub at https://github.com/ssb22/config
+% and on GitLab at https://gitlab.com/ssb22/config
+% and on BitBucket https://bitbucket.org/ssb22/config
