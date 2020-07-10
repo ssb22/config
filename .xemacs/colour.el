@@ -92,7 +92,13 @@
  '(message-header-to-face ((((class color) (background dark)) (:foreground "green2"))) t)
  '(zmacs-region ((t (:background "darkblue"))) t)
  '(forms-field-face ((((class color)) (:foreground "cyan"))) t)
- '(message-highlighted-header-contents ((t (:foreground "green" :bold nil))) t))
+ '(message-highlighted-header-contents ((t (:foreground "green" :bold nil))) t)
+
+ ;; colours for Melpa auto-complete if you ever need to use that: if it gets in the way when writing in familiar programming languages, I suggest setting ac-modes to something more limited, e.g. (setq ac-modes '(go-mode))
+ '(popup-summary-face ((((class color)) (:foreground "white" :background "darkgreen"))) t)
+ '(ac-candidate-face ((((class color)) (:foreground "yellow" :background "darkblue"))) t)
+
+ )
 
 ;; ***********************************************
 ;; SGML/XML stuff (must be after colour settings)
