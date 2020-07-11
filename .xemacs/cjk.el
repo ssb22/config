@@ -8,10 +8,10 @@
 ;; No warranty.
 
 
-;; Time-stamp: <2013-03-04>
+;; Time-stamp: <2020-07-07>
 
 ;; ***********************************************
-;; Nice CJK fonts (and larger versions) :
+;; XEmacs nice CJK fonts (and larger versions) :
 ;; ***********************************************
 
 (defun nice-cjk-fonts ()
@@ -35,10 +35,10 @@
   "Set some nice fonts for CJK characters (larger versions)"
   ;; (don't have a scalable ko font - stuck at 24pt)
   ;; (don't have scalable big5 - doing scaled-bitmap)
-  ;; $A5DH7(B simp
-  ;; $(00|O}(B trad
-  ;; $BF|K\(B jp
-  ;; $(CGQ1[(B ko
+  ;; 的确 simp
+  ;; 的確 trad
+  ;; 日本 jp
+  ;; 한글 ko
   (interactive)
   (set-face-font
    (make-face 'default)
@@ -61,26 +61,80 @@
 ;; (condition cased so still works in tty)
 
 ;; ***********************************************
-;; Japanese stuff:
+;; Input methods:
 ;; ***********************************************
-;; Use SKK (but this might need setting up -
-;; I've installed a local server and put a
-;; /etc/emacs/site-start.d/50skk2.el with the
-;; necessary variables)
-(custom-set-variables
- '(default-input-method (quote japanese-skk))
- )
 
-;; Use EDICT dictionary
+(condition-case nil (require 'pyim) (error nil))
+(custom-set-variables
+ '(default-input-method
+;; If SKK has been set up, assume we want to use it.
+;; This may need installing a local server and adding
+;; /etc/emacs/site-start.d/50skk2.el or similar with
+;; the necessary variables.
+    (if (condition-case nil (assoc "japanese-skk" input-method-alist) (error nil))
+        (quote japanese-skk)
+      ;; pyim might have been installed as a package:
+      (if (condition-case nil (assoc "pyim" input-method-alist) (error nil))
+          (quote pyim)
+        ;; many systems have quail chinese-py:
+        (if (condition-case nil (assoc "chinese-py" input-method-alist) (error nil))
+            (quote chinese-py)
+          ;; fall back to no input method:
+          nil
+        )))))
+
+;; If using SKK, use English version of tutorial:
+(setq skk-tut-file "/usr/share/skk/SKK.tut.E")
+
+;; Use EDICT dictionary, if edict package is installed,
+;; so you can type "M-x edict-search-english" by a word
 ;; The following is correct if you install the Debian edict package
 (setq edict-dictionaries
       '("/usr/share/edict/edict"))
-;; so you can type "M-x edict-search-english" by a word
 
-;; Use English version of SKK Jp input method tutorial:
-(setq skk-tut-file "/usr/share/skk/SKK.tut.E")
+;; Search CEDICT (or a derivative), and can use it as a
+;; rudimentary 'input method' (search by English etc) if
+;; all else fails.  For maximum backward-compatibility,
+;; this code uses the old-style GB2312 / Big5 cedict files
+(setq cedict-dictionary "~/.xemacs/cedict.GB")
+(defun cedict-search-setup-big5 ()
+  (interactive)
+  (setq cedict-dictionary "~/.xemacs/cedict.b5"))
+(defun cedict-search-setup-gb ()
+  (interactive)
+  (setq cedict-dictionary "~/.xemacs/cedict.GB"))
+(defun cedict-search ()
+  (interactive)
+  (find-file cedict-dictionary)
+  (goto-char (point-min))
+  (isearch-forward)
+  (local-set-key [return] 'cedict-search-finished)
+  )
+(defun cedict-search-finished ()
+  (interactive)
+  (isearch-exit)
+  (beginning-of-line)
+  (set-mark-command nil)
+  (if cedict-search-take-whole-entry
+      (next-line 1)
+    (forward-word))
+  (copy-region-as-kill (region-beginning) (region-end))
+  (switch-to-buffer nil)
+  (yank)
+  (local-set-key [return] 'newline-and-indent) ;; TODO: fix it to be buffer-local!  "local-set-key" affects ALL buffers with that major mode
+  )
+(setq cedict-search-take-whole-entry nil)
+(defun cedict-search-setup-whole-entry ()
+  (interactive)
+  (setq cedict-search-take-whole-entry t))
+(defun cedict-search-setup-chars-only ()
+  (interactive)
+  (setq cedict-search-take-whole-entry nil))
+(global-set-key [(control ?=)] 'cedict-search)
 
-;; Functions to display an XEmacs CJK buffer properly:
+;; ***********************************************
+;; Functions to display XEmacs CJK buffer properly:
+;; ***********************************************
 
 (defun my-decode-buffer (CODING-SYSTEM)
   (let ((old-read-only buffer-read-only)
@@ -119,10 +173,6 @@
   (interactive)
   (my-decode-buffer 'shift_jis)
   )
-
-;; ***********************************************
-;; Chinese stuff:
-;; ***********************************************
 
 (condition-case nil
   (require 'un-define) ; Mule UCS package, for utf-8 etc
