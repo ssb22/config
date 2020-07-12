@@ -96,16 +96,28 @@
 ;; rudimentary 'input method' (search by English etc) if
 ;; all else fails.  For maximum backward-compatibility,
 ;; this code uses the old-style GB2312 / Big5 cedict files
-(setq cedict-dictionary "~/.xemacs/cedict.GB")
+;; but can also be set to use the modern UTF-8 file.
 (defun cedict-search-setup-big5 ()
   (interactive)
-  (setq cedict-dictionary "~/.xemacs/cedict.b5"))
+  (setq cedict-dictionary "~/.xemacs/cedict.b5")
+  (setq cedict-search-omit-first-word nil))
 (defun cedict-search-setup-gb ()
   (interactive)
-  (setq cedict-dictionary "~/.xemacs/cedict.GB"))
+  (setq cedict-dictionary "~/.xemacs/cedict.GB")
+  (setq cedict-search-omit-first-word nil))
+(defun cedict-search-setup-utf8-trad ()
+  (interactive)
+  (setq cedict-dictionary "~/.xemacs/cedict.u8")
+  (setq cedict-search-omit-first-word nil))
+(defun cedict-search-setup-utf8-simp ()
+  (interactive)
+  (setq cedict-dictionary "~/.xemacs/cedict.u8")
+  (setq cedict-search-omit-first-word t))
+(cedict-search-setup-utf8-simp) ;; by default
 (defun cedict-search ()
   (interactive)
   (find-file cedict-dictionary)
+  (deactivate-mark)
   (goto-char (point-min))
   (isearch-forward)
   (local-set-key [return] 'cedict-search-finished)
@@ -114,10 +126,12 @@
   (interactive)
   (isearch-exit)
   (beginning-of-line)
+  (if cedict-search-omit-first-word
+      (search-forward " "))
   (set-mark-command nil)
   (if cedict-search-take-whole-entry
       (next-line 1)
-    (forward-word))
+    (search-forward " ") (backward-char))
   (copy-region-as-kill (region-beginning) (region-end))
   (switch-to-buffer nil)
   (yank)
