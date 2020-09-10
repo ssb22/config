@@ -6,6 +6,7 @@
 # on GitHub at https://github.com/ssb22/config
 # and on GitLab at https://gitlab.com/ssb22/config
 # and on BitBucket https://bitbucket.org/ssb22/config
+# and at https://gitlab.developers.cam.ac.uk/ssb22/config
 
 # avoid index taking up too much space when reading the message underneath:
 set pager_index_lines = 5 ;
