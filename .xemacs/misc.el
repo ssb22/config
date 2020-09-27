@@ -7,7 +7,7 @@
 ;; See my website for details on tested Emacs setups.
 ;; No warranty.
 
-;; Time-stamp: <2018-09-01>
+;; Time-stamp: <2020-09-26>
 
 ;; ***********************************************
 ;; Protect against sloppy keypresses:
@@ -273,6 +273,18 @@
 ;;(if running-on-console
 ;;    (condition-case nil (x-symbol-initialize) (error nil))
 ;;  )
+
+;; M-. and M-, to go to definition and back WITHOUT ctags
+;; (if dumb-jump installed on Emacs 24.3+)
+(if
+    (or
+     (> emacs-major-version 24)
+     (and (= emacs-major-version 24) (> emacs-minor-version 2)))
+    (condition-case nil
+        (progn
+          (require 'dumb-jump)
+          (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
+      (error nil)))
 
 ;; ***********************************************
 ;; Miscellaneous editing options:
