@@ -1,6 +1,7 @@
 ! -*- conf-xdefaults -*-
 
-! This is Silas S. Brown's X resources file.
+! This is an X resources file used by Silas S. Brown.
+! (wersion without unmatched apostrophes so it parses without warning on later versions of xrdb)
 ! This is meant for large monitor and low-res virtual desktop
 
 ! To activate any changes, type: xrdb + ~/.Xresources
@@ -33,7 +34,7 @@ Xft.antialias: 0
 ! ------------------------------------------------------
 ! Bitmap fonts to use.  See below for a brief explanation.
 ! -misc-fixed-medium-r-normal-*-20-*-100-*-c-*-iso8859-1 is good for terminals
-! but it's not available any larger than 20 (it's a bitmap and doesn't scale
+! but it is not available any larger than 20 (it's a bitmap and doesn't scale
 ! well).
 ! (fontList is used by the Motif library)
 				 *font: -*-fixed-medium-r-normal-*-20-*-100-*-c-*-*-*
@@ -43,7 +44,7 @@ Xft.antialias: 0
 ! Some versions of nedit need explicit stuff
 			 nedit*fontList: -*-fixed-medium-r-normal-*-20-*-100-*-c-*-*-*
 	nedit*helpText.fontList: -*-fixed-medium-r-normal-*-20-*-100-*-c-*-*-*
-! NEEDATTENTION above line doesn't seem to work
+! TODO: above line does not seem to work
 				UXTerm*font: -*-fixed-medium-r-normal-*-20-*-100-*-c-*-*-*
             UXTerm*geometry: 57x17
 
@@ -73,7 +74,7 @@ Emacs.bold.attributeFont: -bitstream-courier-bold-r-normal-*-20-*-*-*-m-*-*-*
 ! Actually, we could just leave this unset.
 !		     *boldFont: -asdf-*-bold-r-normal-*-20-*-*-*-*-*-*-*
 !	*boldHighlightFont: -asdf-*-bold-r-normal-*-20-*-*-*-*-*-*-*
-! XEmacs won't do this overstriking, so give it a proper bold font.
+! XEmacs will not do this overstriking, so give it a proper bold font.
 ! Now moved this to .emacs, because specifying the resources here either
 ! got spurious warnings or incorrect behaviour (probably a bug somewhere)
 
@@ -81,7 +82,7 @@ Emacs.bold.attributeFont: -bitstream-courier-bold-r-normal-*-20-*-*-*-m-*-*-*
 ! *boldItalicHighlightFont: -bitstream-*-bold-o-normal-*-20-*-*-*-*-*-*-*
 
 ! Fonts can be chosen by changing the numbers in the above directly,
-! or by using xfontsel or gtkfontsel.  It's worth making sure there are
+! or by using xfontsel or gtkfontsel.  It is worth making sure there are
 ! plenty of extra fonts installed on your system.
 
 ! * means "anything".  The fields are: Foundry, Family, Weight (normal or
@@ -167,7 +168,7 @@ Emacs.bold.attributeFont: -bitstream-courier-bold-r-normal-*-20-*-*-*-m-*-*-*
 ! Next setting applies even to newer versions of LyX:
 ! initial geometry.  Make sure not larger than the visible
 ! area of the virtual desktop (especially for versions that
-! can't be resized any smaller than initial size).
+! cannot be resized any smaller than initial size).
        *LyX.geometry: 640x480
 
 ! nedit stuff:
@@ -185,7 +186,7 @@ nedit*statsLine.background: blue
      nedit*text.foreground: yellow
  nedit*helpText.foreground: yellow
 
-! NEdit: Here's a well-tested set of highlight colors for use with dark backgrounds
+! NEdit: Here is a well-tested set of highlight colors for use with dark backgrounds
 ! and a single font.  (contributed by Lance Spaulding of HP)
 ! Source: ftp://ftp.fnal.gov/pub/nedit/v5_0_2/contrib/darkbg.styles
 			  nedit.styles:   Plain:Yellow:Plain\n\
@@ -253,11 +254,11 @@ nedit*statsLine.background: blue
 ! xpdf stuff:
 		 ! *xpdf.initialZoom: 2
 ! commented out the above because it has different semantics
-! in different versions of xpdf (in newer versions it's a
+! in different versions of xpdf (in newer versions it is a
 ! percentage)
 		  *xpdf.paperColor: darkgrey
 		  *xpdf.urlCommand: go lynx '%s'
-! Not using anti-aliased fonts because they don't work too
+! Not using anti-aliased fonts because they do not work too
 ! well with different background colours
 		*xpdf.t1libControl: plain
 	 ! *xpdf.t1libControl: none
