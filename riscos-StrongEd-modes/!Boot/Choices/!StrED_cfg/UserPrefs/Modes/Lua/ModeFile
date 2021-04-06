@@ -1,0 +1,172 @@
+#-------------------------------------------------------------------------------
+#
+# Name    : Lua
+# Purpose : StrongED mode file for RiscLua 5.70
+# Author  : Gavin Wraith
+# Licence : Freeware
+# Version : 0.06, 09/02/14 + ssb22 corrected missing space in line 25's quotes
+#
+#-------------------------------------------------------------------------------
+
+HelpPath	"RiscLua"
+
+ID_FirstChar	A-Za-z_!?$@
+ID_Middle	A-Za-z_0-9!?$@
+
+
+#-------------------------------------------------------------------------------
+Search
+	lua_here	<*CW*>
+	lua_blockop	* "]"
+	lua_firstvar	Alpha | '_!?$@'
+	lua_middlevar	lua_firstvar | Digit
+	lua_variable	lua_firstvar {lua_middlevar}
+	lua_label	"::" {" "} lua_variable {" "} "::"
+	lua_assign	~("for" {" "}) lua_variable {"," lua_variable} {" "} "=" ~(">"|"=")
+	lua_func	({'A-Za-z0-9'}+ @9 {" "} "=" {" "} ("function" | "\\")) | ("function" {" "}+ @0 * @9 "(")
+	lua_gofunc	(CW {" "} "=" {" "} ("function" | "\\")) | ("function" {" "}+ CW)
+
+	_Indent		{" "}
+	_MarkWord	lua_variable | {Punct}+
+	_DeleteWord	lua_variable
+	_MoveWord	lua_variable
+
+End
+
+
+#-------------------------------------------------------------------------------
+SmartIndent Case
+	IndentSize	2
+	IndentAfter	< {" "} ("do" | "if" | "elseif" | "else" | "for" | "function" | "repeat" | "while") \s
+	OutdentLine	< {" "} ("end" | "elseif" | "else" | "until") \s
+End
+
+
+#-------------------------------------------------------------------------------
+SyntaxOptions
+	SingleQuote	Yes
+	DoubleQuote	Yes
+	QuoteChar	\
+	QuoteQuote	No
+	SplitString	Yes
+End
+
+
+#-------------------------------------------------------------------------------
+SyntaxComment 1
+	CommentType	MultiLine
+	StartWith	--[[
+	EndWith		--]]
+End
+
+
+#-------------------------------------------------------------------------------
+# Control structs
+SyntaxWords Group1 case
+	break do else elseif end for function goto \
+	if in local repeat return => then until while
+End
+
+# Libraries
+Syntaxwords Group2 case
+	string table io os debug coroutine bc riscos final lpeg
+	package
+End
+
+# Keywords
+SyntaxWords Group3 case
+	assert collectgarbage _G _ENV dofile error getmetatable
+	ipairs load loadstring next  pairs pcall print
+	rawequal rawget rawlen rawset
+	require  select  setmetatable tonumber tostring
+	type xpcall
+End
+
+# Line comments
+SyntaxWords Group4 EndOfLine
+	#!
+	--
+End
+
+# Comparisons
+SyntaxWords Group5 case
+	== ~= < > <= >=
+End
+
+# Arithmetic
+SyntaxWords Group6 case
+	| & ^^ << >> + - * / % .. ::
+End
+
+# Logical
+SyntaxWords Group7 case
+	and or not true false nil
+End
+
+# Block ops
+SyntaxWords Group8 case EndOfExpr lua_blockop
+	![ ?[ $[
+End
+
+
+#-------------------------------------------------------------------------------
+KeyList
+	cs-R	ReindentText(,Force)
+#	Return	ReindentText(Line,Force) Newline()
+End
+
+
+#-------------------------------------------------------------------------------
+Functions
+	Key	F2
+	Menu	List of functions F2
+	Icon	LoF
+	Help	HLua_lof
+	Select	ListOfFound(lua_func,,,NoLine)
+
+	Key	^G
+	Menu	Goto function
+	Icon	goto
+	Help	HLua_go
+	Select	Push GotoFound(lua_gofunc,Text,Whole,NoLine,Case)
+
+	Key	^G 2
+	Adjust	Pop
+
+	Menu	Assignments
+	Icon	assign
+	Help	HLua_assign
+	Select	ListOfFound (lua_assign,Forward,Whole,NoLine,Case)
+
+	Adjust	ListOfFound (lua_assign,Text,Whole,NoLine,Case)
+
+	Menu	List words at caret
+	Icon	here
+	Help	HLua_here
+	Select	ListOfFound (lua_here,Forward,Whole,NoLine,Case)
+
+	Adjust	ListOfFound (lua_here,Text,Whole,NoLine,Case)
+
+	Menu	Labels
+	Icon	label
+	Help	HLua_label
+	Select	ListOfFound (lua_label,Forward,Whole,NoLine,Case)
+
+	Adjust	ListOfFound (lua_label,Text,Whole,NoLine,Case)
+
+	Key	F10
+	Menu	Run  F10
+	Icon	Run
+	Help	HLua_run
+	Select	SetTmp() SaveRun("Lua <StrongED$Tmp_FileName>")
+
+	Adjust	SetTmp() SaveRun("Taskwindow \"Lua <StrongED$Tmp_FileName>\" -quit")
+
+	Key	^F10
+	Menu	Bytecode ^F10
+	Icon	brick
+	Help	HLua_compile
+	Select	SetTmp() SaveRun("Taskwindow \"luac -l -p <StrongED$Tmp_FileName>\" -quit")
+
+	Adjust	SetTmp() SaveRun("luac -s -o <StrongED$Tmp_FileName>/o -- <StrongED$Tmp_FileName>")
+End
