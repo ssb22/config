@@ -5,6 +5,7 @@
 # and on GitLab at https://gitlab.com/ssb22/config
 # and on BitBucket https://bitbucket.org/ssb22/config
 # and at https://gitlab.developers.cam.ac.uk/ssb22/config
+# and in China: https://gitee.com/ssb22/config
 
 # don't wrap by default - because usually using nano to edit a script etc
 set nowrap

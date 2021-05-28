@@ -28,3 +28,4 @@ vres, vres+btm_margin, vres+btm_margin+vsync_len, vres+btm_margin+vsync_len+top_
 # and on GitLab at https://gitlab.com/ssb22/config
 # and on BitBucket https://bitbucket.org/ssb22/config
 # and at https://gitlab.developers.cam.ac.uk/ssb22/config
+# and in China: https://gitee.com/ssb22/config
