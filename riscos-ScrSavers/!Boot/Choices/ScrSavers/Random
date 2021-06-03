@@ -1,0 +1,18 @@
+# 'Random' screensaver configuration file
+# Put a '#' character before any screensavers that you don't want to run
+# and then save this file again.
+
+#!Circles # no renewal
+!DeskBall
+!Pogo
+#!Rain # looks like monitor failure
+!ScrBounce
+#!Scrolling # sprite error
+#!Shred # incompatible with Alarm
+!Slider
+#!Smear # no renewal
+!Snow
+!SprBounce
+!Swarm
+#!AcornLogo
+
