@@ -9,6 +9,9 @@
 ! If this command is in your .xsession (or similar)
 ! near the start, then the settings should take place
 ! every time you log in.
+! E.g. in Mac XQuartz (tested on 2.8.1), run:
+! defaults write org.xquartz.x11 app_to_run "xrdb + ~/.Xresources;exit"
+! (omit ";exit" to get an xterm by default)
 
 ! Where to find history:
 ! on GitHub at https://github.com/ssb22/config
