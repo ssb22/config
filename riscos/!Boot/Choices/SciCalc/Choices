@@ -1,0 +1,7 @@
+# Choices file for SciCalc
+
+Type:Scientific
+Base:Dec
+Trig:Rad
+Theme:Yes
+Open:Yes
