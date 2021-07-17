@@ -12,7 +12,7 @@
 ;; use it for notes etc).  Includes launch of small-frame,
 ;; gnuserv, &c
 
-;; Time-stamp: <2013-03-14>
+;; Time-stamp: <2021-07-15>
 
 ;; ***********************************************
 ;; Scratch stuff:
@@ -101,7 +101,11 @@
 ;; this is better (and copes with small TTYs) :
 (if (eq (mytty-type) nil)
     (condition-case nil ; (condition-case added for FSF Emacs 22)
-(general-small-frame (min 60 (- (frame-width) 1)) (min 20 (frame-height)))
+(general-small-frame
+ (min 60 (- (frame-width) 1))
+ (min
+  (if (eq window-system 'mac) 18 20)
+  (frame-height)))
 (error nil))
 )
 ;; and for MS Windows maximise:
