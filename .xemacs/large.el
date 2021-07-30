@@ -10,7 +10,7 @@
 ;; (large print, increasing real-estate, user functions
 ;; (reflow) &c)
 
-;; Time-stamp: <2019-05-08>
+;; Time-stamp: <2021-07-29>
 
 ;; ***********************************************
 ;; Large fonts
@@ -116,6 +116,10 @@
 ;;    http://www.emacswiki.org/emacs/download/frame-fns.el
 ;; useful if you have variable sight (especially with Freetype fonts)
 ;; (WARNING - if that wiki is open to vandalism, verify the files first!)
+;; Emacs 27 deprecates cl, so you might want to replace
+;; (require 'cl) with (require 'cl-lib)
+;; in all 3 files (well, older versions of zoom-frm.el don't have it)
+;; - this also works in Emacs 25
 (condition-case nil
     (require 'zoom-frm)
   (error
