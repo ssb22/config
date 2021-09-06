@@ -10,7 +10,7 @@
 ;; (large print, increasing real-estate, user functions
 ;; (reflow) &c)
 
-;; Time-stamp: <2021-07-29>
+;; Time-stamp: <2021-09-06>
 
 ;; ***********************************************
 ;; Large fonts
@@ -116,10 +116,18 @@
 ;;    http://www.emacswiki.org/emacs/download/frame-fns.el
 ;; useful if you have variable sight (especially with Freetype fonts)
 ;; (WARNING - if that wiki is open to vandalism, verify the files first!)
-;; Emacs 27 deprecates cl, so you might want to replace
-;; (require 'cl) with (require 'cl-lib)
-;; in all 3 files (well, older versions of zoom-frm.el don't have it)
-;; - this also works in Emacs 25
+;; Emacs 27 deprecates cl, so you might want to remove
+;; (require 'cl) in all 3 files (older versions of
+;; zoom-frm.el don't have it) and we'll bring in cl-lib
+;; - this also works in Emacs 25,
+;; and incidentally the following can work around the
+;; "void-function incf" problem in go-autocomplete.el
+;; if you use that:
+(condition-case nil
+    (progn
+      (require 'cl-lib)
+      (defalias 'incf 'cl-incf)
+      ) (error nil))
 (condition-case nil
     (require 'zoom-frm)
   (error

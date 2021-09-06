@@ -8,7 +8,7 @@
 ;; No warranty.
 
 
-;; Time-stamp: <2007-02-06>
+;; Time-stamp: <2021-09-06>
 ;; (other files might have a later time stamp)
 
 (defun myload (file)
@@ -51,15 +51,11 @@
 (condition-case nil (display-time) (error nil))
 
 ;; *********************************************
-;; Terminal coding system
-;; (for gnuclient within putty; for some reason doesn't
+;; Terminal coding system (for some reason doesn't
 ;; work when put it in cjk.el so we're trying it here
 ;; at the end of everything)
 ;; *********************************************
-
-(set-terminal-coding-system 'utf-8)
-;; "currently broken"?
-;; putty can accept UTF-8
-
-;; STILL doesn't work on startup - need to
-;; interactively do it from the gnuclient session
+(condition-case nil (set-terminal-coding-system 'utf-8) (error nil))
+;; (putty can accept UTF-8, as can Mac and modern GNU/Linux terminals)
+;; (If using gnuclient to connect to an old Emacs on X11,
+;; might need to do the above interactively after gnuclient starts)
