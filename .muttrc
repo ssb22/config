@@ -1,6 +1,6 @@
 # .muttrc settings for large-print terminals
 # (i.e. not many rows and columns available)
-# (C) Silas S. Brown 2007,2009-2013,2016,2020, version 1.45.
+# (C) Silas S. Brown 2007,2009-2013,2016,2020-21, v1.46.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -152,12 +152,33 @@ color index brightwhite black "~P";
 # deleted messages:
 color index magenta black '~D';
 
+# ------------------------------------------------
+
+# Options for handling HTML mail (this needs customising).
+
 # Uncomment 2 lines below to view HTML etc using mailcap
 # filters if possible:
 #auto_view text/html;
 #set implicit_autoview = 'yes';
 
-# - if that doesn't work, try writing a ~/.mailcap like
+# You might need to write a ~/.mailcap file
+# (or /etc/mailcap if you have system-level access).
+# If you're using imapfix to ensure all mail is UTF-8
+# (and your terminal handles UTF-8), this should suffice:
+
+# text/html; lynx -assume-charset=utf-8 -display-charset=utf-8 -dump -force_html %s; copiousoutput; description=HTML Text; nametemplate=%s.html
+
+# BUT if you're on a Mac, there's a bug in one of the Mac's
+# character-set handling libraries that lynx uses
+# (in at least OS X 10.7 through macOS 11.6, and possibly other
+# versions, but not in FreeBSD), that results in lynx deleting
+# any UTF-8 byte 0x85 if immediately followed by whitespace.
+# As 0x85 always occurs at the end of a UTF-8 character, we can
+# work around the bug by adding a hyphen after every 0x85 byte:
+
+# text/html; bash -c "LC_ALL=C sed -e $'s/\\x85/&-/g' < %s | lynx -stdin -assume-charset=utf-8 -display-charset=utf-8 -dump -force_html"; copiousoutput; description=HTML Text; nametemplate=%s.html
+
+# Older version for non-imapfix, client-side, charset conversion:
 # text/html; ~/mutt/lynx.sh %{charset} %s; copiousoutput; description=HTML Text; nametemplate=%s.html
 # and a ~/mutt/lynx.sh like:
 # #!/bin/bash
