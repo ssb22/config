@@ -1,6 +1,6 @@
 # .muttrc settings for large-print terminals
 # (i.e. not many rows and columns available)
-# (C) Silas S. Brown 2007,2009-2013,2016,2020-21, v1.47.
+# (C) Silas S. Brown 2007,2009-2013,2016,2020-21, v1.48.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -111,8 +111,10 @@ set fast_reply = 'yes';
 # Choose an editor that's likely to be OK on small terminals
 # emacs could be too heavyweight (unless there's a server that gnuclient can attach to)
 # NB jmacs cannot be configured to 'always wrap to screen width' (at least not on the installation I used) so we tell it where to wrap on the command line.
-# Again, don't write anything about current terminal in .edit-cmd
-set editor = `echo "if test a\$COLUMNS = a;then export COLUMNS=\$(stty size|sed -e 's/.* //');fi;\$(echo $(which jmacs&&echo echo -rmargin \$COLUMNS||which jed||which emacs||which xemacs)) \$@">~/.edit-cmd;chmod +x ~/.edit-cmd;echo $HOME/.edit-cmd`;
+# Don't write anything about current terminal in ~/.e (see display_filter comment above)
+# Also, try to change Message-ID: (if present), since some IMAP servers (e.g. GMail 2021-12) don't accept anything other than part-deletions if Message-ID is present and unchanged and message is going to same folder
+# (the second sed has roundabout syntax for GNU+BSD compatibility)
+set editor = `echo "if test a\$COLUMNS = a;then export COLUMNS=\$(stty size|sed -e 's/.* //');fi;\$(echo $(which jmacs&&echo echo -rmargin \$COLUMNS||which jed||which emacs||which xemacs)) \$@&&sed -i '' -e 's/^Message-ID: </&1/' \$@ 2>/dev/null||true">~/.e;chmod +x ~/.e;echo $HOME/.e`;
 
 set rfc2047_parameters = "yes";
 # - helps decode broken attachments
