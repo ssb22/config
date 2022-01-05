@@ -112,7 +112,7 @@ set fast_reply = 'yes';
 # emacs could be too heavyweight (unless there's a server that gnuclient can attach to)
 # NB jmacs cannot be configured to 'always wrap to screen width' (at least not on the installation I used) so we tell it where to wrap on the command line.
 # Don't write anything about current terminal in ~/.e (see display_filter comment above)
-# Also, try to change Message-ID: (if present), since some IMAP servers (e.g. GMail 2021-12) don't accept anything other than part-deletions if Message-ID is present and unchanged and message is going to same folder
+# Also, try to change Message-ID: (if present), since some IMAP servers (e.g. GMail 2021-12) don't accept anything other than additions/deletions of parts (not alterations of them) if Message-ID is present and unchanged
 # (the second sed has roundabout syntax for GNU+BSD compatibility)
 set editor = `echo "if test a\$COLUMNS = a;then export COLUMNS=\$(stty size|sed -e 's/.* //');fi;\$(echo $(which jmacs&&echo echo -rmargin \$COLUMNS||which jed||which emacs||which xemacs)) \$@&&sed -i '' -e 's/^Message-ID: </&1/' \$@ 2>/dev/null||true">~/.e;chmod +x ~/.e;echo $HOME/.e`;
 
