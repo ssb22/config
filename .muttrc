@@ -183,7 +183,7 @@ color index magenta black '~D';
 # text/html; ~/mutt/lynx.sh %{charset} %s; copiousoutput; description=HTML; nametemplate=%s.html
 # and a ~/mutt/lynx.sh like:
 # #!/bin/bash
-# export L=$(echo "$1"|sed -e s/18030/2312/) # lynx won't recognise "GB18030" labels
+# L=$(echo "$1"|sed -e s/18030/2312/) # lynx won't recognise "GB18030" labels
 # exec lynx -assume-charset="$L" -display-charset="$L" -dump -force_html "$2" | iconv -f $(echo "$L"|sed -e s/2312/18030/ -e s/ISO8859_1/ISO-8859-1/ -e s/ks_*c_*5601-*1*9*8*7*/ksc5636/) -t //TRANSLIT
 # (lynx not w3m because some w3m versions stop rendering
 # pages that contain very bad HTML part-way through, e.g.
@@ -209,7 +209,7 @@ set wait_key = 'yes';
 # set print_command="cd $(mktemp -d /tmp/mailXXX);sed -e $'s/\\f/From \\\\n/'|LANG=C mhonarc - >/dev/null 2>/dev/null;open maillist.html";
 
 # Option 2: as above but if WEB environment variable is present it overrides hostname
-#set print_command="cd $(mktemp -d ~/public_html/mailXXX);sed -e $'s/\\f/From \\\\n/'|LANG=C mhonarc -;[ a\$WEB = a ]&&export WEB=$(hostname -f);echo;echo http://\$WEB/~$(whoami)/$(pwd|sed -e 's-.*/--')/maillist.html;echo Then rm -r $(pwd)";
+#set print_command="cd $(mktemp -d ~/public_html/mailXXX);sed -e $'s/\\f/From \\\\n/'|LANG=C mhonarc -;[ a\$WEB = a ]&&WEB=$(hostname -f);echo;echo http://\$WEB/~$(whoami)/$(pwd|sed -e 's-.*/--')/maillist.html;echo Then rm -r $(pwd)";
 # Note: the above CANNOT be made much longer, because some versions of mutt will truncate it.  (And that happens after expansion of environment variables, hence escaping some of those $'s.  Some versions of mktemp won't accept fewer than 3 X characters.)
 
 # Option 3: as above but WEB is compulsory, must be a user-specific subdomain and must also accept SSH logins (use .ssh/config if necessary). For running mutt remotely on a server that is not itself a web server but has SSH access to one.
