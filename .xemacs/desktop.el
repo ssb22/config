@@ -12,7 +12,7 @@
 ;; use it for notes etc).  Includes launch of small-frame,
 ;; gnuserv, &c
 
-;; Time-stamp: <2021-07-15>
+;; Time-stamp: <2022-02-22>
 
 ;; ***********************************************
 ;; Scratch stuff:
@@ -62,7 +62,15 @@
  (progn
     (condition-case nil
           (emacs-wiki-find-file "WelcomePage")
-      (error (if (file-exists-p "~/.xemacs/wiki/WelcomePage") (find-file "~/.xemacs/wiki/WelcomePage"))))
+      (error (if (file-exists-p "~/.xemacs/wiki/WelcomePage")
+                 (find-file "~/.xemacs/wiki/WelcomePage")
+               ;; otherwise start with *scratch*, but at least save some horizontal space on its modeline if possible ("Fundamental" is a long word and may push the clock off screen)
+               (when (eq system-type 'darwin)
+                 (add-hook 'emacs-startup-hook #'do-face-remaps)
+                 (defun do-face-remaps ()
+                   (face-remap-add-relative 'mode-line :family "Arial")
+                   (face-remap-add-relative 'mode-line-inactive :family "Arial")
+                   )))))
   (fix-fonts)
   ))
 
