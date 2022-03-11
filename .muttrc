@@ -177,7 +177,7 @@ color index magenta black '~D';
 # any UTF-8 byte 0x85 or 0xA0 if immediately followed by
 # whitespace etc.  Workaround by adding u+200b after:
 
-# text/html; sh -c "LANG=C sed -Ee $'s/(\\x85|\\xa0)([^\\x80-\\xff]|$)/\\\\\\\\1\\xe2\\x80\\x8b\\\\\\\\2/g' < %s | lynx -stdin -assume-charset=utf-8 -display-charset=utf-8 -dump -force_html"; copiousoutput; description=HTML; nametemplate=%s.html
+# text/html; sh -c "LC_ALL=C sed -Ee $'s/(\\x85|\\xa0)([^\\x80-\\xff]|$)/\\\\\\\\1\\xe2\\x80\\x8b\\\\\\\\2/g' < %s | lynx -stdin -assume-charset=utf-8 -display-charset=utf-8 -dump -force_html"; copiousoutput; description=HTML; nametemplate=%s.html
 
 # Older version for non-imapfix, client-side, charset conversion:
 # text/html; ~/mutt/lynx.sh %{charset} %s; copiousoutput; description=HTML; nametemplate=%s.html
