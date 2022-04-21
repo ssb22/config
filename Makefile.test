@@ -1,0 +1,7 @@
+# -*- mode: Makefile -*-
+test:
+	# at least check Python compiles in both 2 and 3
+	python2 modeline.py | grep ^Modeline >/dev/null
+	python3 modeline.py | grep ^Modeline >/dev/null
+	echo hi|python2 .message-formatter|grep hi >/dev/null
+	echo hi|python3 .message-formatter|grep hi >/dev/null
