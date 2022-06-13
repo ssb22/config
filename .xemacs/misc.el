@@ -7,7 +7,7 @@
 ;; See my website for details on tested Emacs setups.
 ;; No warranty.
 
-;; Time-stamp: <2020-09-26>
+;; Time-stamp: <2022-05-31>
 
 ;; ***********************************************
 ;; Protect against sloppy keypresses:
@@ -529,3 +529,13 @@
 (setq-default ispell-program-name "aspell") ;; you'll need to set up cocoAspell or something
 ;; TODO: make the modeline font a bit larger! (changing faces here doesn't seem to take effect)
 ;; TODO: rename the Window menu back to Buffers
+
+;; make MELPA packages available
+(require 'package)
+(setq package-archives
+      '(("elpa" . "https://elpa.gnu.org/packages/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/")
+        ("melpa" . "https://melpa.org/packages/"))
+      package-archive-priorities
+      '(("elpa" . 2) ("melpa-stable" . 1) ("melpa" . 0))) ;; especially if not (> emacs-major-version 25), e.g. markdown-mode non-stable requires Emacs 26 as of 2022-06
+(package-initialize)
