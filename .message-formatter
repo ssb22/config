@@ -2,7 +2,7 @@
 
 # This is ~/.message-formatter - a mutt display filter
 # to format an email message for the screen width
-# (C) Silas S. Brown 2007,2010,2012,2020.  Version 1.42.
+# (C) Silas S. Brown 2007,2010,2012,2020,2022.  Version 1.43.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -70,7 +70,8 @@ while 1:
   para_start = 0
   if quote_level==-1 or r=="-- \n" or r=="\n":
     if type(u"")==type(""): sys.stdout.write(r) # Python 3
-    else: sys.stdout.write(r.encode('utf-8')) # Python 2
+    elif type(r)==type(u""): sys.stdout.write(r.encode('utf-8')) # Python 2
+    else: sys.stdout.write(repr(r)+'\n') # Python 2 + wasn't valid UTF-8
   else: para.append(r)
   if not quote_level==-1: quote_level = new_quote_level
 if para: output_para(para,quote_prefix)
