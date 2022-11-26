@@ -213,7 +213,7 @@ set wait_key = 'yes';
 # Note: the above CANNOT be made much longer, because some versions of mutt will truncate it.  (And that happens after expansion of environment variables, hence escaping some of those $'s.  Some versions of mktemp won't accept fewer than 3 X characters.)
 
 # Option 3: as above but WEB is compulsory, must be a user-specific subdomain and must also accept SSH logins (use .ssh/config if necessary). For running mutt remotely on a server that is not itself a web server but has SSH access to one.
-set print_command="cd \$(mktemp -d);chmod 700 .;sed -e $'s/\\f/From \\\\n/'|LANG=C mhonarc -;echo;echo -n http://\$WEB/;tar -c .|ssh \$WEB 'cd \$(mktemp -d ~/public_html/mailXXX)&&tar -x;chmod a+rx * .;pwd|sed -e s,.*/,,'";
+#set print_command="cd \$(mktemp -d);chmod 700 .;sed -e $'s/\\f/From \\\\n/'|LANG=C mhonarc -;echo;echo -n http://\$WEB/;tar -c .|ssh \$WEB 'cd \$(mktemp -d ~/public_html/mailXXX)&&tar -x;chmod a+rx * .;pwd|sed -e s,.*/,,'";
 
 # If you need to do more then make a separate script and call that.
 
@@ -225,15 +225,16 @@ set print_command="cd \$(mktemp -d);chmod 700 .;sed -e $'s/\\f/From \\\\n/'|LANG
 set sort=reverse-date-sent;
 # (old versions of mutt do that anyway, some new versions default to forward-sort of date, let's make it consistent)
 
+# You might want to uncomment the following if using Exim:
 # to prevent Bcc from being exposed by Mutt+Exim, set -t option, and ignore the addresses on the command line
 # but we can't use bash -c 'sendmail -t #' because mutt won't parse these quotes
 # This must be single quoted not double quoted or mutt will try to expand $IFS itself and go wrong:
-set sendmail='/bin/bash -c $1$IFS$2$IFS$3$IFS$4 bash /usr/sbin/sendmail -oem -oi -t'
+#set sendmail='/bin/bash -c $1$IFS$2$IFS$3$IFS$4 bash /usr/sbin/sendmail -oem -oi -t'
 # and when using the -t option, Bounce won't work, so unbind it:
-bind index b noop
-bind pager b noop
+#bind index b noop
+#bind pager b noop
 # and make sure write_bcc is still yes:
-set write_bcc='yes';
+#set write_bcc='yes';
 # Alternatively, you may comment out the above and
 # compile msmtp in your home directory:
 # set sendmail=$HOME/msmtp/bin/msmtp
