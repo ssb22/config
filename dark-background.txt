@@ -29,6 +29,9 @@
 "WindowFrame"="0 0 0"
 "WindowText"="255 255 0"
 
+[Software\\Microsoft\\Windows\\CurrentVersion\\ThemeManager]
+"ThemeActive"="0"
+
 [Software\\Wenlin4\\Preferences]
 "colorNormal"=hex(1):46,00,46,00,30,00,30,00,20,00,46,00,46,00,30,00,30,00,20,00,30,00,00,00,30
 "colorNormalBG"=hex(1):30,00,20,00,30,00,20,00,34,00,30,00,30,00,30,00,00,00,20
