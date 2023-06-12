@@ -5,3 +5,4 @@ test:
 	python3 modeline.py | grep ^Modeline >/dev/null
 	echo hi|python2 .message-formatter|grep hi >/dev/null
 	echo hi|python3 .message-formatter|grep hi >/dev/null
+.PHONY: test
