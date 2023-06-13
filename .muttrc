@@ -1,6 +1,6 @@
 # .muttrc settings for large-print terminals
 # (i.e. not many rows and columns available)
-# (C) Silas S. Brown 2007,2009-2013,2016,2020-22, v1.49.
+# (C) Silas S. Brown 2007,2009-2013,2016,2020-23, v1.5.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -114,7 +114,7 @@ set fast_reply = 'yes';
 # Don't write anything about current terminal in ~/.e (see display_filter comment above)
 # Also, try to change Message-ID: (if present), since some IMAP servers (e.g. GMail 2021-12) don't accept anything other than additions/deletions of parts (not alterations of them) if Message-ID is present and unchanged
 # (the second sed has roundabout syntax for GNU+BSD compatibility)
-set editor = `echo "if test a\$COLUMNS = a;then export COLUMNS=\$(stty size|sed -e 's/.* //');fi;\$(echo $(which jmacs&&echo echo -rmargin \$COLUMNS||which jed||which emacs||which xemacs)) \$@&&rm \$@~ 2>/dev/null&&sed -i '' -e 's/^Message-ID: </&1/' \$@ 2>/dev/null||true">~/.e;chmod +x ~/.e;echo $HOME/.e`;
+set editor = `echo "if test a\$COLUMNS = a;then export COLUMNS=\$(stty size|sed -e 's/.* //');fi;\$(echo $(which jmacs&&echo echo -rmargin \$COLUMNS||which jed||which emacs||which xemacs)) \$@&&rm \$@~ 2>/dev/null&&sed -i '' -e 's/^Message-I[Dd]: </&1/' \$@ 2>/dev/null||true">~/.e;chmod +x ~/.e;echo $HOME/.e`;
 
 set rfc2047_parameters = "yes";
 # - helps decode broken attachments
@@ -171,13 +171,18 @@ color index magenta black '~D';
 # text/html; lynx -assume-charset=utf-8 -display-charset=utf-8 -dump -force_html %s; copiousoutput; description=HTML; nametemplate=%s.html
 
 # BUT if you're on a Mac, there's a bug in one of the Mac's
-# character-set handling libraries that lynx uses
-# (in at least OS X 10.7 through macOS 11.6, and possibly other
+# character-set handling libraries used by MacPorts/HomeBrew lynx
+# (in at least OS X 10.7 through macOS 13, and possibly other
 # versions, but not in FreeBSD), that results in lynx deleting
 # any UTF-8 byte 0x85 or 0xA0 if immediately followed by
-# whitespace etc.  Workaround by adding u+200b after:
-
+# whitespace etc.  The following workaround adds u+200b after,
+# which fixes it on earlier macOS but not on macOS 13:
 # text/html; sh -c "LC_ALL=C sed -Ee $'s/(\\x85|\\xa0)([^\\x80-\\xff]|$)/\\\\\\\\1\\xe2\\x80\\x8b\\\\\\\\2/g' < %s | lynx -stdin -assume-charset=utf-8 -display-charset=utf-8 -dump -force_html"; copiousoutput; description=HTML; nametemplate=%s.html
+
+# You could also try w3m, which is more likely to silently drop the
+# affected characters on macOS 10.13, but at least shows the rest of
+# the message rather than stopping with an error:
+# text/html; w3m -s -I utf-8 -O utf-8 -T text/html -dump; copiousoutput; description=HTML; nametemplate=%s.html
 
 # Older version for non-imapfix, client-side, charset conversion:
 # text/html; ~/mutt/lynx.sh %{charset} %s; copiousoutput; description=HTML; nametemplate=%s.html
