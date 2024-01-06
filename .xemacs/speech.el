@@ -11,8 +11,6 @@
 ;; (since emacspeak is awkward to set up on some versions of
 ;; XEmacs)
 
-;; Time-stamp: <2004-04-19>
-
 ;; reads words at cursor as go along, sometimes useful
 (defun festival-start-reading-words () (interactive)
   (require 'festival)

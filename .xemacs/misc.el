@@ -7,8 +7,6 @@
 ;; See my website for details on tested Emacs setups.
 ;; No warranty.
 
-;; Time-stamp: <2022-05-31>
-
 ;; ***********************************************
 ;; Protect against sloppy keypresses:
 ;; ***********************************************

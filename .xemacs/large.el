@@ -10,8 +10,6 @@
 ;; (large print, increasing real-estate, user functions
 ;; (reflow) &c)
 
-;; Time-stamp: <2021-09-06>
-
 ;; ***********************************************
 ;; Large fonts
 ;; ***********************************************

@@ -16,8 +16,6 @@
 ;; See my website for details on tested Emacs setups.
 ;; No warranty.
 
-;; Time-stamp: <2015-11-23>
-
 ;; ***********************************************
 ;; Turn on syntax highlighting:
 ;; ***********************************************

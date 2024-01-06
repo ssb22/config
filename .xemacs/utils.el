@@ -10,8 +10,6 @@
 
 ;; utils.el - service routines needed by other things
 
-;; Time-stamp: <2004-01-08>
-
 (defun my-replace-regexp (REGEXP TO-STRING)
   (save-excursion
     (while (re-search-forward REGEXP nil t)

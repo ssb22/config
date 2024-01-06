@@ -12,8 +12,6 @@
 ;; use it for notes etc).  Includes launch of small-frame,
 ;; gnuserv, &c
 
-;; Time-stamp: <2022-02-22>
-
 ;; ***********************************************
 ;; Scratch stuff:
 ;; ***********************************************

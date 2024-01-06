@@ -8,9 +8,6 @@
 ;; No warranty.
 
 
-;; Time-stamp: <2021-09-06>
-;; (other files might have a later time stamp)
-
 (defun myload (file)
   (condition-case err (load file)
     (error (warn "Warning: file %s: %s" file (cdr err)))))

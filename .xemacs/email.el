@@ -9,8 +9,6 @@
 
 ;; email.el - mail & news, including workarounds, fill, &c
 
-;; Time-stamp: <2016-10-01>
-
 ;; ***********************************************
 ;; Composition stuff:
 ;; ***********************************************
@@ -237,7 +235,7 @@
 (defun set-extent-data (extent data)
   "Obsolete.  Set the `data' property of EXTENT."
   (set-extent-property extent 'data data))
-(make-obsolete 'set-extent-data 'set-extent-property)
+;;(make-obsolete 'set-extent-data 'set-extent-property) ;; warns on startup in Emacs 28.2
 (defun set-extent-attribute (extent attr &optional clearp)
   (cond ((eq attr 'write-protected)
          (set-extent-property extent 'read-only t))
@@ -249,7 +247,7 @@
          (set-extent-property extent 'invisible nil))
         (t
          (set-extent-property extent attr t))))
-(make-obsolete 'set-extent-attribute 'set-extent-property)
+;;(make-obsolete 'set-extent-attribute 'set-extent-property) ;; warns on startup in Emacs 28.2
 (defun extent-data (extent)
   "Obsolete.  Return the `data' property of EXTENT."
   (extent-property extent 'data))

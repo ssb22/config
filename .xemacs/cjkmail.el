@@ -10,8 +10,6 @@
 
 ;; cjkmail.el - East Asian languages & letters / email
 
-;; Time-stamp: <2007-02-25>
-
 ;; Stuff for inserting Japanese subject lines in emails
 (defun japanese-subject-region ()
   (interactive)
