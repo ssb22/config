@@ -484,6 +484,9 @@
         (delete-selection-mode nil)
         ) (error nil)))
 (setq default-buffer-file-coding-system 'utf-8)
+(condition-case nil
+    (prefer-coding-system 'utf-8) ;; for filesystem etc
+  (error nil))
 
 ;; Need to do the following to make M-x xterm-mouse-mode
 ;; work, at least on some versions of Emacs 22.  (We don't
