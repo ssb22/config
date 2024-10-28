@@ -103,7 +103,7 @@
 ;; ***********************************************
 (add-hook
  'sgml-mode-hook
- '(lambda ()
+ #'(lambda ()
     (if (and
          (or
           (string= mode-name "XML")

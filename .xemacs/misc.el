@@ -245,8 +245,8 @@
 ;; and in case that doesn't work, do this:
 (if (fboundp 'imenu-add-to-menubar)
     (progn
-      (add-hook 'c-mode-hook '(lambda () (imenu-add-to-menubar "IM-C")))
-      (add-hook 'c++-mode-hook '(lambda () (imenu-add-to-menubar "IM-C++")))
+      (add-hook 'c-mode-hook #'(lambda () (imenu-add-to-menubar "IM-C")))
+      (add-hook 'c++-mode-hook #'(lambda () (imenu-add-to-menubar "IM-C++")))
       ))
 
 ;; Enable recursive minibuffers by default (if in a
@@ -289,7 +289,7 @@
 ;; ***********************************************
 
 ;; Enable auto-fill by default in all text modes:
-(add-hook 'text-mode-hook '(lambda () (auto-fill-mode 1)))
+(add-hook 'text-mode-hook #'(lambda () (auto-fill-mode 1)))
 
 ;; "filladapt" is slightly better at filling bulleted lists
 ;; and so forth.
@@ -390,7 +390,7 @@
 (setq line-move-visual nil) ;; for FSF Emacs 23+
 (global-set-key (kbd "M-g") 'goto-line)
 (setq x-select-enable-clipboard t)
-(global-set-key (kbd "M-C-l") '(lambda () (interactive) (switch-to-buffer (other-buffer))))
+(global-set-key (kbd "M-C-l") #'(lambda () (interactive) (switch-to-buffer (other-buffer))))
 (condition-case nil
     (progn
       ;; needed on Mac OS X Lion:
@@ -497,8 +497,8 @@
 (condition-case nil (progn
 (require 'mouse)
 (if (not (fboundp 'track-mouse)) (defun track-mouse (e)))
-(global-set-key [mouse-4] '(lambda () (interactive) (scroll-down 1)))
-(global-set-key [mouse-5] '(lambda () (interactive) (scroll-up 1)))
+(global-set-key [mouse-4] #'(lambda () (interactive) (scroll-down 1)))
+(global-set-key [mouse-5] #'(lambda () (interactive) (scroll-up 1)))
 ) (error nil))
 
 ;; If using Aquamacs, make it a bit more Emacs-like
@@ -524,7 +524,7 @@
 (condition-case nil (remove-hook 'text-mode-hook 'smart-spacing-mode) (error nil))
 (condition-case nil (remove-hook 'text-mode-hook 'auto-detect-wrap) (error nil))
 (condition-case nil (remove-hook 'text-mode-hook 'visual-line-mode) (error nil))
-(condition-case nil (add-hook 'html-helper-mode-hook '(lambda () (condition-case nil (html-mode) (error nil)))) (error nil))
+(condition-case nil (add-hook 'html-helper-mode-hook #'(lambda () (condition-case nil (html-mode) (error nil)))) (error nil))
 (condition-case nil (fringe-mode 'default) (error nil))
 (condition-case nil (let ((el (assoc 'empty-line default-fringe-indicator-alist)) (co (assoc 'continuation default-fringe-indicator-alist))) (if el (setcdr el nil)) (if co (setcdr co '(left-curly-arrow right-curly-arrow)))) (error nil)) ;; Aquamacs' ellipses are hard for low vision, + the empty-line thing can be too stripey for nystagmus
 (setq-default ispell-program-name "aspell") ;; you'll need to set up cocoAspell or something

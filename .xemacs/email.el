@@ -134,7 +134,7 @@
 
 ;; Write a copy to Copyself
 (setq mail-archive-file-name "~/.vm/Copyself")
-;; (add-hook 'mail-send-hook '(lambda () (write-region (point-min) (point-max) "~/Copyself" t)))
+;; (add-hook 'mail-send-hook #'(lambda () (write-region (point-min) (point-max) "~/Copyself" t)))
 
 ;; Filling stuff (some people send messages with rather
 ;; long lines)
@@ -221,7 +221,7 @@
 ;; messages (rather than 6.72's once).  The following gets
 ;; the old behaviour back.
 (add-hook 'vm-mode-hook
-          '(lambda ()
+          #'(lambda ()
              (progn
                (local-unset-key ?#)
                (local-set-key ?# 'vm-expunge-folder))))
@@ -235,7 +235,7 @@
 (defun set-extent-data (extent data)
   "Obsolete.  Set the `data' property of EXTENT."
   (set-extent-property extent 'data data))
-;;(make-obsolete 'set-extent-data 'set-extent-property) ;; warns on startup in Emacs 28.2
+(make-obsolete 'set-extent-data 'set-extent-property "")
 (defun set-extent-attribute (extent attr &optional clearp)
   (cond ((eq attr 'write-protected)
          (set-extent-property extent 'read-only t))
@@ -247,7 +247,7 @@
          (set-extent-property extent 'invisible nil))
         (t
          (set-extent-property extent attr t))))
-;;(make-obsolete 'set-extent-attribute 'set-extent-property) ;; warns on startup in Emacs 28.2
+(make-obsolete 'set-extent-attribute 'set-extent-property "")
 (defun extent-data (extent)
   "Obsolete.  Return the `data' property of EXTENT."
   (extent-property extent 'data))
