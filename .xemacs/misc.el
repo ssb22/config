@@ -244,10 +244,7 @@
       ) (error nil))
 ;; and in case that doesn't work, do this:
 (if (fboundp 'imenu-add-to-menubar)
-    (progn
-      (add-hook 'c-mode-hook #'(lambda () (imenu-add-to-menubar "IM-C")))
-      (add-hook 'c++-mode-hook #'(lambda () (imenu-add-to-menubar "IM-C++")))
-      ))
+    (add-hook 'after-change-major-mode-hook #'(lambda () (if imenu-generic-expression (imenu-add-to-menubar "IM")))))
 
 ;; Enable recursive minibuffers by default (if in a
 ;; different window)
