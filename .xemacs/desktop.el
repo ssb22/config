@@ -22,7 +22,7 @@
 ;; Turn auto-save on in scratch buffer if we're on the
 ;; console
 (if running-on-console
-    (setq initial-major-mode '(lambda () (fundamental-mode) (auto-save-mode t)))
+    (setq initial-major-mode #'(lambda () (fundamental-mode) (auto-save-mode t)))
   )
 
 ;; Now using "emacs wiki" to keep notes instead of scratch
@@ -35,7 +35,7 @@
         (find-file (read-file-name "Find file: " "~/"))
       (call-interactively 'find-file)))
 (add-hook 'emacs-wiki-mode-hook
-          '(lambda ()
+          #'(lambda ()
              (progn
                (local-set-key
                 [(control x) (control f)]
@@ -120,3 +120,18 @@
 ;; Start gnuserv if we're on the console
 (condition-case nil
 (if running-on-console (gnuserv-start)) (error nil))
+
+;; If you want to browse Gemini space with Elpher
+;; and have msttcorefonts installed, you can try:
+(add-hook 'elpher-mode-hook
+          (lambda ()
+            (toggle-word-wrap t) ;; for proportional wrapping
+            (face-remap-add-relative 'default :family "Arial")))
+(defun window-width (&optional WINDOW PIXELWISE)
+    (if (equal mode-name "elpher")
+        32767 ;; because we're using toggle-word-wrap instead
+      (window-body-width WINDOW PIXELWISE)))
+(custom-set-variables
+ '(elpher-default-url-type "gemini")
+ '(elpher-gemini-max-fill-width 32767) ;; use toggle-word-wrap instead
+ '(elpher-start-page-url "gemini://gemini.ctrl-c.club/~ssb22/"))
