@@ -113,7 +113,7 @@
     (setq-default vm-url-browser 'browse-url-default-macosx-browser)
       )
   (progn
-    (setq-default browse-url-browser-function 'browse-url-mozilla)
+    (setq-default browse-url-browser-function (if (fboundp 'browse-url-xdg-open) 'browse-url-xdg-open 'browse-url-mozilla)) ;; Android Termux needs xdg-open and can-use-xdg-open might be nil
     (setq-default vm-url-browser 'browse-url-mozilla) ;; so VM's
 ;; mouse-2 also starts mozilla, although it might not appear
 ;; on the mouse-3 menu
