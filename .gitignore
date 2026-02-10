@@ -1,1 +1,5 @@
+# To ignore Emacs backup files in every repository,
+# save this as ~/.gitignore
+# and use: git config --global core.excludesFile ~/.gitignore
+
 *~

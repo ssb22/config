@@ -314,7 +314,9 @@ Or you can use Preferences / LXQt Settings / Session / Global Screen Scaling, bu
 
 You can set a larger mouse cursor in Preferences / LXQt Settings / Appearance.
 
-Here’s a [darker LXQt theme](.config/lxqt/lxqt.conf) if you need one (save as .config/lxqt/lxqt.conf)
+Here’s a [darker LXQt theme](.config/lxqt/lxqt.conf) if you need one (save as `.config/lxqt/lxqt.conf`)
+
+Openbox’s ability to drag windows to other virtual desktops can be annoying if done accidentally when all you want is temporarily to place a window mostly off-screen; you can turn it off in `obconf-qt` by setting Desktops number to 1. (Then optionally remove the visible switcher via the panel’s Manage Widgets option, but this alone won't disable drag to new desktop without the obconf setting.)
 
 ### KDE 5
 K menu > System settings > Display & Monitor > Scale Display. 
