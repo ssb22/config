@@ -360,6 +360,8 @@ I usually find that Unix terminal applications work reasonably well in large pri
 
 For GNU/Linux `top`, try pressing `f` and turn off columns you don’t really need, e.g. turn off priority (`h` on older versions of `top`), nice (`i`), RSS (`q`), etc and perhaps turn off username (`e`) and turn on uid (`d`) on single-user systems, press `c` to toggle extended commandline and press `W` to write to `.toprc` or `.config/procps/toprc`.  Mac/BSD `top` is less flexible.
 
+If you need IRC via `weechat`, to make more room for messages try `/set weechat.look.prefix_align none` and `/set weechat.look.buffer_time_format "%H:%M"` and `/set weechat.bar.buflist.size 5` or `/bar hide buflist`  (and use `/buffer 1`, `/buffer list` etc to navigate them), and `/set weechat.bar.nicklist.size 10` or similar.
+
 ### Console
 
 On modern GNU/Linux distributions the console font size is quite small.  You might be able to go some way toward enlarging it by using this [.console-setup](.console-setup) and putting `setupcon` in your `.bash_profile`, or if you don’t have setupcon then try `setfont /path/to/`[TerminusBold32x16.psf.gz](https://ssb22.user.srcf.net/setup/TerminusBold32x16.psf.gz).
