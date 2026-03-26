@@ -243,7 +243,7 @@
       (setq-default fume-mode-line-string nil)
       ) (error nil))
 ;; and in case that doesn't work, do this:
-(condition-case nil (require 'imenu) (add-hook 'after-change-major-mode-hook #'(lambda () (condition-case nil (imenu-add-to-menubar "IM") (error nil)))) (error nil))
+(condition-case nil (progn (require 'imenu) (add-hook 'after-change-major-mode-hook #'(lambda () (condition-case nil (imenu-add-to-menubar "IM") (error nil))))) (error nil))
 
 ;; Enable recursive minibuffers by default (if in a
 ;; different window)
