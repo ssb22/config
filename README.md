@@ -374,7 +374,7 @@ For fonts larger than 32px (and for CJK), on GNU/Linux you might be able to inst
 
 The [.xemacs directory](.xemacs/) (wrapper in [.emacs](.emacs)) has some Emacs configuration files for low vision (large fonts, saving screen real-estate, and dark backgrounds) with many Emacs features supported.  This is meant for:
 
-* FSF Emacs 23 through 29, in high-resolution GNU/Linux (standard packages), Android (Termux), Mac OS X (Carbon or Aquamacs), and Windows (binary download from GNU)
+* FSF Emacs 23 through 30, in high-resolution GNU/Linux (standard packages), Android (Termux), Mac OS X (Carbon or Aquamacs), and Windows (binary download from GNU)
 * FSF Emacs 22 (some Mac OS X machines have only this version)
 * XEmacs 21 with bitmap fonts, in older Linux distributions with low-resolution scrollable desktops (I haven’t used this since 2015)
 * Terminal mode in any of the above

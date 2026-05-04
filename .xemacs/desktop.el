@@ -128,7 +128,7 @@
             (toggle-word-wrap t) ;; for proportional wrapping
             (face-remap-add-relative 'default :family "Arial")))
 (defun window-width (&optional WINDOW PIXELWISE)
-    (if (equal mode-name "elpher")
+    (if (equal (format-mode-line mode-name) "elpher")
         32767 ;; because we're using toggle-word-wrap instead
       (window-body-width WINDOW PIXELWISE)))
 (custom-set-variables

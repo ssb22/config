@@ -106,8 +106,8 @@
  #'(lambda ()
     (if (and
          (or
-          (string= mode-name "XML")
-          (string= mode-name "SGML"))   ; Not HTML etc
+          (string= (format-mode-line mode-name) "XML")
+          (string= (format-mode-line mode-name) "SGML"))   ; Not HTML etc
          (not (string-match "\.html?$" buffer-file-name))
          )
         (progn

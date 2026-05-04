@@ -22,6 +22,8 @@
 (setq kill-emacs-query-functions (cons 'queryExit kill-emacs-query-functions))
 
 (if (or (eq window-system 'mac) (eq window-system 'ns))
+(unless (fboundp 'with-no-warnings) (defmacro with-no-warnings (&rest body) `(progn ,@body))) ;; for Emacs 21 and earlier
+(with-no-warnings ;; (defadvice deprecated in Emacs 30)
 ;; http://superuser.com/questions/308045/disallow-closing-last-emacs-window-via-window-manager-close-button
 ;; (too easy to click there by mistake on the Mac)
 (defadvice handle-delete-frame (around my-handle-delete-frame-advice activate)
@@ -29,16 +31,16 @@
       (let ((frame   (posn-window (event-start event)))
             (numfrs  (length (visible-frame-list))))
         (when (or (> numfrs 1) (y-or-n-p "Really exit Emacs? "))
-          ad-do-it))))
+          ad-do-it)))))
 
 ;; Avoid accidentally creating new buffers if Ctrl-X B's tab completion
 ;; doesn't complete uniquely and you don't notice
-(defadvice switch-to-buffer
+(with-no-warnings (defadvice switch-to-buffer
   (before exising-buffer activate compile)
   "Avoid accidentally creating new buffers"
   (interactive
    (list (read-buffer "Switch to buffer: "
-                      (other-buffer) (null current-prefix-arg)))))
+                      (other-buffer) (null current-prefix-arg))))))
 
 ;; Please don't beep for long (do need non-0 volume for
 ;; e.g. i-search wrapping)
@@ -217,12 +219,12 @@
 ;; commands run from your home directory if the current
 ;; buffer is FTP (SSH is OK), and it raises an error if
 ;; you try to M-x grep from an FTP directory.
-(defadvice shell-command (around no-rsh)
+(with-no-warnings (defadvice shell-command (around no-rsh)
 (let ((default-directory (cond ((and (>= (length default-directory) 5) (string-equal (substring default-directory 0 5) "/ftp:")) "/") (t default-directory)))) ; ("/" works better than "~" on FSF Emacs 22)
-    ad-do-it))
+    ad-do-it)))
 (ad-activate 'shell-command)
-(defadvice grep (around no-rsh)
-  (if (and (>= (length default-directory) 5) (string-equal (substring default-directory 0 5) "/ftp:")) (progn (beep) (message "Cannot grep over FTP")) ad-do-it))
+(with-no-warnings (defadvice grep (around no-rsh)
+  (if (and (>= (length default-directory) 5) (string-equal (substring default-directory 0 5) "/ftp:")) (progn (beep) (message "Cannot grep over FTP")) ad-do-it)))
 (ad-activate 'grep)
 
 ;; Put "redo" on the menus, if available
