@@ -538,3 +538,6 @@
       package-archive-priorities
       '(("elpa" . 2) ("melpa-stable" . 1) ("melpa" . 0))) ;; especially if not (> emacs-major-version 25), e.g. markdown-mode non-stable requires Emacs 26 as of 2022-06
 (package-initialize)
+
+;; Make Tab actually insert tab in .tsv files, overriding earlier whitespace mode
+(add-hook 'find-file-hook (lambda () (when (string-match "\\.tsv\\'" buffer-file-name) (local-set-key (kbd "TAB") 'self-insert-command))))
