@@ -1,4 +1,11 @@
-% jed configuration for small terminals v1.1 - Silas S. Brown - public domain - no warranty
+% jed configuration for small terminals v1.1
+% Silas S. Brown, License: Apache 2
+% (I did say "public domain no warranty" but apparently
+% some corporate offices don't trust that.  Apache 2 lets
+% them know I don't have a silly patent up my sleeve that
+% I'd try to enforce, so their policy might accept it more
+% easily if you need to use this at work.)
+
 WRAP = SCREEN_WIDTH; % (does not always work in all versions of jed, but try)
 HORIZONTAL_PAN = -1; % better than panning just one line; still waiting for the option to continue a line rather than pan
 map_input (8, 127); % set Ctrl-H to backspace in case of misconfigured terminal

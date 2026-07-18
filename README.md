@@ -358,7 +358,7 @@ I usually find that Unix terminal applications work reasonably well in large pri
 * [.tmux.conf](.tmux.conf) configures the terminal multiplexer `tmux` (which is like `screen` but might handle UTF-8 better)
 * For `curl`, put `-sS` into `.curlrc` to stop problems with the progress bar on small terminals (also helps with programs that use curl, such as HomeBrew)
 
-For GNU/Linux `top`, try pressing `f` and turn off columns you don’t really need, e.g. turn off priority (`h` on older versions of `top`), nice (`i`), RSS (`q`), etc and perhaps turn off username (`e`) and turn on uid (`d`) on single-user systems, press `c` to toggle extended commandline and press `W` to write to `.toprc` or `.config/procps/toprc`.  Mac/BSD `top` is less flexible.
+For GNU/Linux `top`, try pressing `f` and turn off columns you don’t really need (in modern `top` use arrows and space to toggle; on older versions you press letters on the `f` screen), e.g. turn off priority (`h` on older versions of `top`), nice (`i`), RSS (`q`), etc and perhaps turn off username (`e`) and turn on uid (`d`) on single-user systems, press `c` to toggle extended commandline and press `W` to write to `.toprc` or `.config/procps/toprc`.  Mac/BSD `top` is less flexible.
 
 If you need IRC via `weechat`, to make more room for messages try `/set weechat.look.prefix_align none` and `/set weechat.look.buffer_time_format "%H:%M"` and `/set weechat.bar.buflist.size 5` or `/bar hide buflist`  (and use `/buffer 1`, `/buffer list` etc to navigate them), and `/set weechat.bar.nicklist.size 10` or similar.
 
@@ -374,7 +374,7 @@ For fonts larger than 32px (and for CJK), on GNU/Linux you might be able to inst
 
 The [.xemacs directory](.xemacs/) (wrapper in [.emacs](.emacs)) has some Emacs configuration files for low vision (large fonts, saving screen real-estate, and dark backgrounds) with many Emacs features supported.  This is meant for:
 
-* FSF Emacs 23 through 30, in high-resolution GNU/Linux (standard packages), Android (Termux), Mac OS X (Carbon or Aquamacs), and Windows (binary download from GNU)
+* FSF Emacs 23 through 30 (or Emacspeak) in high-resolution GNU/Linux (standard packages), Android (Termux), Mac OS X (Carbon or Aquamacs), and Windows (binary download from GNU)
 * FSF Emacs 22 (some Mac OS X machines have only this version)
 * XEmacs 21 with bitmap fonts, in older Linux distributions with low-resolution scrollable desktops (I haven’t used this since 2015)
 * Terminal mode in any of the above
