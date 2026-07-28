@@ -344,6 +344,10 @@
          (>= emacs-minor-version 4))
     (set-specifier default-gutter-visible-p nil))
 
+;; Shorten license boilerplate when opening files on Emacs ~29+
+(if (fboundp 'elide-head-mode)
+    (add-hook 'find-file-hook 'elide-head-mode))
+
 ;; ***********************************************
 ;; Utility functions for user functions below
 ;; ***********************************************
